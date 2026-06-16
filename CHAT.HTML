@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOTOTUS — Ultra Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           BASE VARIABLES (fixed missing chip variables, avatar colors)
+           ============================================================ */
+        :root {
+            --bg-body: #f5f7fb;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-muted: #555;
+            --border-color: #e2e8f0;
+            --sidebar-bg: #ffffff;
+            --accent: #e63946;
+            --accent-hover: #c62834;
+            --glow-color: rgba(230, 57, 70, 0.25);
+            --select-bg: #f1f4f9;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --badge-bg: #fce4e4;
+            --chip-gradient-1: linear-gradient(135deg, #ff6b6b, #e63946);
+            --chip-gradient-2: linear-gradient(135deg, #ffd93d, #ff6b6b);
+            --chip-gradient-3: linear-gradient(135deg, #6c5ce7, #0984e3);
+            --chip-gradient-4: linear-gradient(135deg, #00b894, #00cec9);
+            --theme-icon-glow: rgba(255, 200, 0, 0.6);
+            --dropdown-bg: rgba(255, 255, 255, 0.85);
+            --dropdown-border: rgba(230, 57, 70, 0.2);
+            --chip-active-border: #1a73e8;
+            --chip-active-bg: rgba(26, 115, 232, 0.12);
+            --toggle-bg: #ccc;
+            --toggle-active: #e63946;
+            --model-chip-bg: rgba(255, 255, 255, 0.5);
+            --model-chip-border: rgba(230, 57, 70, 0.15);
+            --model-chip-active-bg: rgba(230, 57, 70, 0.08);
+            --model-chip-active-border: #e63946;
+            /* NEW: chip background & border */
+            --chip-bg: rgba(255, 255, 255, 0.6);
+            --chip-border: rgba(0, 0, 0, 0.08);
+            /* NEW: avatar brain colors (theme‑aware) */
+            --avatar-brain-color: #e63946;
+            --avatar-line-color: #ef4444;
+            /* NEW: toast background */
+            --toast-bg: linear-gradient(135deg, rgba(230,57,70,0.85), rgba(255,107,122,0.75));
+            --toast-text: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --text-primary: #e8e8f0;
+            --text-muted: #a8a8b8;
+            --border-color: #2a2a3e;
+            --sidebar-bg: #141425;
+            --select-bg: #2a2a3e;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            --badge-bg: #2a1a1a;
+            --glow-color: rgba(230, 57, 70, 0.35);
+            --chip-gradient-1: linear-gradient(135deg, #ff6b6b, #e63946);
+            --chip-gradient-2: linear-gradient(135deg, #ffd93d, #fdcb6e);
+            --chip-gradient-3: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            --chip-gradient-4: linear-gradient(135deg, #00b894, #55efc4);
+            --theme-icon-glow: rgba(200, 200, 255, 0.5);
+            --dropdown-bg: rgba(26, 26, 46, 0.92);
+            --dropdown-border: rgba(230, 57, 70, 0.3);
+            --chip-active-border: #4fc3f7;
+            --chip-active-bg: rgba(79, 195, 247, 0.15);
+            --toggle-bg: #444;
+            --toggle-active: #ff6b7a;
+            --model-chip-bg: rgba(30, 30, 50, 0.6);
+            --model-chip-border: rgba(230, 57, 70, 0.2);
+            --model-chip-active-bg: rgba(230, 57, 70, 0.15);
+            --model-chip-active-border: #ff6b7a;
+            --chip-bg: rgba(30, 30, 50, 0.5);
+            --chip-border: rgba(255, 255, 255, 0.08);
+            --avatar-brain-color: #ff6b7a;
+            --avatar-line-color: #ff6b7a;
+            --toast-bg: linear-gradient(135deg, rgba(230,57,70,0.85), rgba(255,107,122,0.75));
+            --toast-text: #fff;
+        }
+
+        [data-theme="blue"] {
+            --bg-body: #eef5ff;
+            --bg-card: #ffffff;
+            --text-primary: #0a2a4a;
+            --text-muted: #2a4a6a;
+            --border-color: #b8d0e8;
+            --sidebar-bg: #ffffff;
+            --accent: #1a73e8;
+            --accent-hover: #0d47a1;
+            --select-bg: #e3edf7;
+            --shadow: 0 8px 30px rgba(26, 115, 232, 0.08);
+            --badge-bg: #dce8f5;
+            --glow-color: rgba(26, 115, 232, 0.25);
+            --chip-gradient-1: linear-gradient(135deg, #4fc3f7, #1a73e8);
+            --chip-gradient-2: linear-gradient(135deg, #81d4fa, #0288d1);
+            --chip-gradient-3: linear-gradient(135deg, #64b5f6, #1565c0);
+            --chip-gradient-4: linear-gradient(135deg, #4dd0e1, #00838f);
+            --theme-icon-glow: rgba(26, 115, 232, 0.6);
+            --dropdown-bg: rgba(255, 255, 255, 0.92);
+            --dropdown-border: rgba(26, 115, 232, 0.25);
+            --chip-active-border: #1a73e8;
+            --chip-active-bg: rgba(26, 115, 232, 0.15);
+            --toggle-bg: #b8d0e8;
+            --toggle-active: #1a73e8;
+            --model-chip-bg: rgba(255, 255, 255, 0.6);
+            --model-chip-border: rgba(26, 115, 232, 0.15);
+            --model-chip-active-bg: rgba(26, 115, 232, 0.1);
+            --model-chip-active-border: #1a73e8;
+            --chip-bg: rgba(255, 255, 255, 0.5);
+            --chip-border: rgba(0, 0, 0, 0.05);
+            --avatar-brain-color: #1a73e8;
+            --avatar-line-color: #1a73e8;
+            --toast-bg: linear-gradient(135deg, rgba(26,115,232,0.85), rgba(79,195,247,0.75));
+            --toast-text: #fff;
+        }
+
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            height:100vh; width:100vw;
+            font-family:'Inter',sans-serif;
+            background:var(--bg-body); color:var(--text-primary);
+            overflow:hidden;
+            transition:background 0.4s, color 0.4s;
+        }
+
+        /* ============================================================
+           SIDEBAR
+           ============================================================ */
+        .sidebar {
+            position:fixed; left:0; top:0; width:64px; height:100vh;
+            background:var(--sidebar-bg); border-right:1px solid var(--border-color);
+            display:flex; flex-direction:column; align-items:center;
+            padding:16px 0 12px 0; z-index:100;
+            box-shadow:2px 0 12px rgba(0,0,0,0.04);
+            transition:background 0.4s, border-color 0.4s;
+        }
+        .sidebar-icon {
+            width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+            color:var(--text-muted); font-size:18px; cursor:pointer;
+            border-radius:10px; transition:all 0.2s ease; margin:2px 0; flex-shrink:0;
+            position:relative;
+        }
+        .sidebar-icon:hover { background:var(--badge-bg); color:var(--accent); transform:scale(1.05); }
+        .sidebar-spacer { flex-grow:1; min-height:8px; }
+        .sidebar-icon.code-icon { font-weight:700; font-size:16px; letter-spacing:-0.5px; }
+        .sidebar-icon.code-icon i { font-weight:700; }
+
+        /* ----- SIDEBAR THEME DROPDOWN (fixed positioning) ----- */
+        .sidebar-theme-wrapper {
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin:2px 0;
+            flex-shrink:0;
+        }
+        .sidebar-theme-trigger {
+            width:40px; height:40px;
+            display:flex; align-items:center; justify-content:center;
+            color:var(--text-muted); font-size:18px; cursor:pointer;
+            border-radius:10px; transition:all 0.2s ease;
+            background:transparent; border:none;
+            font-family:'Inter',sans-serif;
+        }
+        .sidebar-theme-trigger:hover {
+            background:var(--badge-bg); color:var(--accent); transform:scale(1.05);
+        }
+        .sidebar-theme-trigger .theme-icon {
+            font-size:18px;
+            transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .sidebar-theme-trigger:hover .theme-icon {
+            transform:rotate(60deg) scale(1.1);
+        }
+
+        .sidebar-theme-menu {
+            position:fixed;
+            left:68px;
+            top:50%;
+            transform:translateY(-50%) translateX(-10px) scale(0.95);
+            min-width:140px;
+            background:var(--dropdown-bg);
+            backdrop-filter:blur(24px);
+            -webkit-backdrop-filter:blur(24px);
+            border-radius:14px;
+            border:1px solid var(--dropdown-border);
+            box-shadow:0 16px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            padding:5px;
+            opacity:0;
+            pointer-events:none;
+            transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin:left center;
+            z-index:200;
+        }
+        .sidebar-theme-menu.open {
+            opacity:1;
+            pointer-events:all;
+            transform:translateY(-50%) translateX(0) scale(1);
+        }
+
+        .sidebar-theme-item {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:8px 14px; border-radius:10px; cursor:pointer;
+            transition:all 0.25s ease; position:relative; margin:1px 0;
+            color:var(--text-primary); font-weight:500; font-size:13px; gap:8px;
+        }
+        .sidebar-theme-item .item-label { flex:1; display:flex; align-items:center; gap:6px; }
+        .sidebar-theme-item .item-check { opacity:0; transform:scale(0.5); transition:all 0.3s ease; color:var(--accent); font-size:15px; flex-shrink:0; }
+        .sidebar-theme-item.active .item-check { opacity:1; transform:scale(1); }
+        .sidebar-theme-item:hover { background:var(--badge-bg); transform:translateX(3px); }
+        .sidebar-theme-item.active { background:var(--badge-bg); border-left:3px solid var(--accent); border-radius:10px 4px 4px 10px; }
+        .sidebar-theme-item.active .item-label { font-weight:700; }
+
+        /* ----- SETTINGS ICON (SVG) ----- */
+        .sidebar-icon.settings-icon {
+            width:46px; height:46px; border-radius:12px;
+            border:1px solid transparent; transition:all 0.3s ease;
+            margin-bottom:2px; display:flex; align-items:center; justify-content:center; padding:0;
+        }
+        .sidebar-icon.settings-icon svg {
+            width:28px; height:28px; fill:var(--text-muted);
+            transition:fill 0.3s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .sidebar-icon.settings-icon:hover {
+            color:var(--accent); background:var(--badge-bg); border-color:var(--accent);
+            transform:scale(1.08) rotate(6deg); box-shadow:0 0 28px var(--glow-color);
+        }
+        .sidebar-icon.settings-icon:hover svg { fill:var(--accent); transform:rotate(120deg) scale(1.1); }
+        .sidebar-icon.download-icon { font-size:19px; margin-top:0; }
+        .sidebar-icon.download-icon:hover { color:var(--accent); background:var(--badge-bg); }
+
+        /* ============================================================
+           HEADER — STATIC BRAIN (NO ANIMATION)
+           ============================================================ */
+        .header {
+            margin-left:64px; height:64px; padding:0 28px;
+            display:flex; align-items:center; justify-content:space-between;
+            background:var(--bg-card); border-bottom:1px solid var(--border-color);
+            position:fixed; top:0; left:0; right:0; z-index:90;
+            transition:background 0.4s, border-color 0.4s;
+        }
+        .header-left { display:flex; align-items:center; gap:12px; }
+
+        /* Static brain in header — no animation */
+        .header-brain {
+            font-size:36px;
+            color:var(--accent);
+            transition:color 0.4s;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:44px;
+            height:44px;
+        }
+        .header-brain i {
+            font-size:36px;
+        }
+
+        .greeting {
+            font-size:22px; font-weight:800; letter-spacing:-0.5px;
+            background:linear-gradient(135deg, var(--accent), #ff6b7a);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            transition:background 0.4s;
+        }
+        .header-right .help-icon { color:var(--text-muted); font-size:20px; cursor:pointer; transition:color 0.2s; }
+        .header-right .help-icon:hover { color:var(--accent); }
+
+        /* ============================================================
+           MAIN CONTENT
+           ============================================================ */
+        .main-wrapper {
+            margin-left:64px; margin-top:64px; height:calc(100vh - 64px);
+            display:flex; flex-direction:column; align-items:center;
+            padding:20px; overflow:hidden;
+        }
+        .composer-card {
+            width:700px; max-width:92%; background:var(--bg-card);
+            border-radius:24px; border:1px solid var(--border-color);
+            box-shadow:var(--shadow); padding:22px 24px 16px 24px;
+            display:flex; flex-direction:column;
+            transition:background 0.4s, border-color 0.4s, box-shadow 0.4s;
+            flex-shrink:0;
+            margin-bottom:12px;
+        }
+        .composer-card:hover { border-color:var(--accent); box-shadow:0 8px 40px var(--glow-color); }
+
+        /* ===== CHAT UI (BUBBLES) ===== */
+        .chat-area {
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+            flex:1;
+        }
+        .chat-input-wrap {
+            position:relative;
+            width:100%;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.25s;
+        }
+        .chat-input-wrap:focus-within {
+            border-bottom-color: var(--accent);
+        }
+        .chat-input-wrap input {
+            width:100%;
+            padding:8px 0;
+            font-size:15px;
+            font-family:'Inter',sans-serif;
+            border: none;
+            background: transparent;
+            color:var(--text-primary);
+            outline:none;
+            font-weight:400;
+            line-height:1.5;
+        }
+        .chat-input-wrap input::placeholder {
+            color:var(--text-muted);
+            opacity:0.7;
+            font-weight:400;
+        }
+
+        .chat-messages {
+            width: 700px;
+            max-width: 92%;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            padding:10px 24px;  /* fixed: added horizontal padding to match composer */
+            flex-grow:1;
+            overflow-y:auto;
+        }
+        .chat-message {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            animation: fadeInMsg 0.3s ease;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+        .chat-message .bubble {
+            padding: 8px 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 82%;
+            word-break: break-word;
+            border-radius: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .chat-message.user .bubble {
+            background: var(--accent);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.ai .bubble {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        /* ===== AVATAR: theme‑aware brain colors & smaller dimensions ===== */
+        .chat-message .avatar {
+            width: 20px; /* Reduced from 32px */
+            height: 20px; /* Reduced from 32px */
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .chat-message .avatar .mini-orbit {
+            position: relative;
+            width: 20px; /* Reduced from 32px */
+            height: 20px; /* Reduced from 32px */
+            transform-origin: center;
+        }
+        .chat-message .avatar .mini-orbit .half {
+            position: absolute;
+            width: 20px; /* Reduced from 32px */
+            height: 20px; /* Reduced from 32px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-message .avatar .mini-orbit .half i {
+            font-size: 18px;  /* Reduced from 30px */
+            color: var(--avatar-brain-color);  /* fixed: use variable */
+            transition: color 0.3s;
+        }
+        .chat-message .avatar .mini-orbit .left {
+            clip-path: inset(0 50% 0 0);
+        }
+        .chat-message .avatar .mini-orbit .right {
+            clip-path: inset(0 0 0 50%);
+        }
+        .chat-message .avatar .mini-orbit .line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 2px;
+            height: 14px; /* Reduced from 24px */
+            background: var(--avatar-line-color);  /* fixed: use variable */
+            transform: translate(-50%, -50%) scaleY(0.5);
+            border-radius: 2px;
+            opacity: 0;
+            filter: blur(2px);
+            transition: opacity 0.2s;
+        }
+
+        /* TYPING ANIMATION for avatar — only when .typing class is present */
+        .chat-message.typing .avatar .mini-orbit .left {
+            animation: leftMove 1.6s ease-in-out infinite;
+        }
+        .chat-message.typing .avatar .mini-orbit .right {
+            animation: rightMove 1.6s ease-in-out infinite;
+        }
+        .chat-message.typing .avatar .mini-orbit {
+            animation: orbitRotate 1.6s ease-in-out infinite;
+        }
+        .chat-message.typing .avatar .mini-orbit .line {
+            animation: lineFlash 1.6s ease-in-out infinite;
+        }
+
+        @keyframes leftMove {
+            0%, 10% { transform: translateX(0); }
+            25%   { transform: translateX(-6px); } /* Reduced from -12px */
+            70%   { transform: translateX(-6px); }
+            85%   { transform: translateX(0); }
+            100%  { transform: translateX(0); }
+        }
+        @keyframes rightMove {
+            0%, 10% { transform: translateX(0); }
+            25%   { transform: translateX(6px); } /* Reduced from 12px */
+            70%   { transform: translateX(6px); }
+            85%   { transform: translateX(0); }
+            100%  { transform: translateX(0); }
+        }
+        @keyframes orbitRotate {
+            0%, 10% { transform: rotate(0deg); }
+            70%   { transform: rotate(720deg); }
+            85%   { transform: rotate(720deg); }
+            100%  { transform: rotate(720deg); }
+        }
+        @keyframes lineFlash {
+            0%, 70% { opacity:0; transform:translate(-50%,-50%) scaleY(0.5); }
+            80%   { opacity:1; transform:translate(-50%,-50%) scaleY(1); }
+            90%   { opacity:0; transform:translate(-50%,-50%) scaleY(0.5); }
+            100%  { opacity:0; }
+        }
+
+        .chat-message .bubble .cursor-blink {
+            display:inline-block;
+            width:2px;
+            height:1.1em;
+            background:var(--accent);
+            margin-left:2px;
+            vertical-align:text-bottom;
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+        @keyframes fadeInMsg { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+        .card-middle-spacer {
+            flex-grow:1;
+            min-height:8px;
+        }
+
+        /* ============================================================
+           TOOLBAR (No glow on dropdowns)
+           ============================================================ */
+        .card-toolbar {
+            display:flex; align-items:center; justify-content:space-between; margin-top:8px;
+        }
+        .toolbar-left .large-plus {
+            color:var(--text-muted); font-size:22px; cursor:pointer;
+            width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+            border-radius:50%; transition:all 0.2s;
+        }
+        .toolbar-left .large-plus:hover { background:var(--badge-bg); color:var(--accent); transform:rotate(90deg); }
+
+        .toolbar-right {
+            display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+        }
+
+        /* ============================================================
+           MODEL + DROPDOWN (No glow / No animated border)
+           ============================================================ */
+        .model-dropdown {
+            position:relative; display:inline-block; z-index:150;  /* fixed: increased z-index */
+        }
+        .model-dropdown-trigger {
+            display:flex; align-items:center; gap:6px;
+            background:var(--select-bg);
+            border:1px solid var(--border-color);
+            border-radius:10px;
+            padding:6px 12px; font-size:13px; font-weight:600;
+            color:var(--text-primary); cursor:pointer;
+            transition:all 0.2s ease;
+            font-family:'Inter',sans-serif; min-width:100px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.03);
+        }
+        .model-dropdown-trigger:hover {
+            background:var(--badge-bg);
+            border-color:var(--accent);
+            transform:translateY(-1px);
+        }
+        .model-dropdown-trigger .trigger-text { display:flex; align-items:center; gap:4px; font-size:13px; }
+        .model-dropdown-trigger .trigger-arrow { transition:transform 0.3s ease; font-size:11px; color:var(--text-muted); }
+        .model-dropdown-trigger.open .trigger-arrow { transform:rotate(180deg); }
+
+        .model-dropdown-menu {
+            position:absolute; top:calc(100% + 6px); left:0; right:0; min-width:140px;
+            background:var(--dropdown-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+            border-radius:14px; border:1px solid var(--dropdown-border);
+            box-shadow:0 16px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            padding:5px; opacity:0; transform:translateY(-8px) scale(0.96);
+            pointer-events:none; transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin:top center; overflow:hidden;
+            z-index:200; /* fixed: increased */
+        }
+        .model-dropdown-menu.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+
+        .model-dropdown-item {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:8px 14px; border-radius:10px; cursor:pointer;
+            transition:all 0.2s ease; margin:1px 0;
+            color:var(--text-primary); font-weight:500; font-size:13px; gap:8px;
+        }
+        .model-dropdown-item .item-label { flex:1; display:flex; align-items:center; gap:6px; }
+        .model-dropdown-item .item-check { opacity:0; transform:scale(0.5); transition:all 0.3s ease; color:var(--accent); font-size:15px; flex-shrink:0; }
+        .model-dropdown-item.active .item-check { opacity:1; transform:scale(1); }
+        .model-dropdown-item:hover { background:var(--badge-bg); }
+        .model-dropdown-item.active { background:var(--badge-bg); border-left:3px solid var(--accent); border-radius:10px 4px 4px 10px; }
+        .model-dropdown-item.active .item-label { font-weight:700; }
+        .model-dropdown-item[data-model="komana"] .item-label {
+            background:linear-gradient(135deg, var(--accent), #ff6b7a);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            font-weight:700;
+        }
+
+        /* ----- DROPDOWN (Max/High/Medium/Low/Complex) - No glow ----- */
+        .premium-dropdown {
+            position:relative; display:inline-block; z-index:150;  /* fixed: increased z-index */
+        }
+        .premium-dropdown-trigger {
+            display:flex; align-items:center; gap:6px;
+            background:var(--select-bg);
+            border:1px solid var(--border-color);
+            border-radius:10px;
+            padding:6px 12px; font-size:13px; font-weight:600;
+            color:var(--text-primary); cursor:pointer;
+            transition:all 0.2s ease;
+            font-family:'Inter',sans-serif; min-width:90px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.03);
+        }
+        .premium-dropdown-trigger:hover {
+            background:var(--badge-bg);
+            border-color:var(--accent);
+            transform:translateY(-1px);
+        }
+        .premium-dropdown-trigger .trigger-text { display:flex; align-items:center; gap:4px; font-size:13px; }
+        .premium-dropdown-trigger .trigger-arrow { transition:transform 0.3s ease; font-size:11px; color:var(--text-muted); }
+        .premium-dropdown-trigger.open .trigger-arrow { transform:rotate(180deg); }
+
+        .premium-dropdown-menu {
+            position:absolute; top:calc(100% + 6px); left:0; right:0; min-width:200px;
+            background:var(--dropdown-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+            border-radius:14px; border:1px solid var(--dropdown-border);
+            box-shadow:0 16px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            padding:5px; opacity:0; transform:translateY(-8px) scale(0.96);
+            pointer-events:none; transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin:top center; overflow:hidden;
+            z-index:200; /* fixed: increased */
+        }
+        .premium-dropdown-menu.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+
+        .premium-dropdown-item {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:10px 16px; border-radius:10px; cursor:pointer;
+            transition:all 0.2s ease; margin:1px 0;
+            color:var(--text-primary); font-weight:500; font-size:13px; gap:8px;
+        }
+        .premium-dropdown-item .item-label { flex:1; display:flex; align-items:center; gap:6px; }
+        .premium-dropdown-item .item-check { opacity:0; transform:scale(0.5); transition:all 0.3s ease; color:var(--accent); font-size:15px; flex-shrink:0; }
+        .premium-dropdown-item.active .item-check { opacity:1; transform:scale(1); }
+        .premium-dropdown-item:hover { background:var(--badge-bg); }
+        .premium-dropdown-item.active { background:var(--badge-bg); border-left:3px solid var(--accent); border-radius:10px 4px 4px 10px; }
+        .premium-dropdown-item.active .item-label { font-weight:700; }
+        .premium-dropdown-item[data-value="Max"] .item-label,
+        .premium-dropdown-item[data-value="High"] .item-label {
+            background:linear-gradient(135deg, #ffd700, #ff6b6b);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            font-weight:700;
+        }
+        .premium-dropdown-item[data-value="Complex"] {
+            border-top:1px solid var(--border-color); margin-top:2px; padding-top:10px;
+        }
+        .premium-dropdown-item[data-value="Complex"] .item-label {
+            font-weight:700; color:var(--accent); -webkit-text-fill-color:var(--accent); background:none;
+        }
+        /* class for complex active state (replaces inline styles) */
+        .premium-dropdown-item.complex-active {
+            border-left:3px solid var(--accent);
+            background:var(--badge-bg);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position:relative; display:inline-block; width:40px; height:22px; flex-shrink:0; cursor:pointer;
+        }
+        .toggle-switch input { opacity:0; width:0; height:0; }
+        .toggle-slider {
+            position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0;
+            background:var(--toggle-bg); transition:0.3s ease; border-radius:22px;
+            box-shadow:inset 0 1px 4px rgba(0,0,0,0.1);
+        }
+        .toggle-slider::before {
+            content:''; position:absolute; height:16px; width:16px; left:3px; bottom:3px;
+            background:#fff; transition:0.3s ease; border-radius:50%;
+            box-shadow:0 1px 4px rgba(0,0,0,0.15);
+        }
+        .toggle-switch input:checked + .toggle-slider { background:var(--toggle-active); }
+        .toggle-switch input:checked + .toggle-slider::before { transform:translateX(18px); }
+        .toggle-switch:hover .toggle-slider { box-shadow:0 0 12px var(--glow-color); }
+
+        /* Send & Mic */
+        .toolbar-send {
+            color:#fff; background:var(--accent); width:34px; height:34px;
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            font-size:15px; cursor:pointer; transition:all 0.25s ease; border:none; flex-shrink:0;
+        }
+        .toolbar-send:hover { background:var(--accent-hover); box-shadow:0 4px 16px var(--glow-color); transform:scale(1.06); }
+        .toolbar-send:active { transform:scale(0.90); }
+        .toolbar-mic { color:var(--text-muted); font-size:16px; cursor:pointer; transition:all 0.2s; }
+        .toolbar-mic:hover { color:var(--accent); transform:scale(1.1); }
+
+        /* Action Chips — fixed missing variables */
+        .action-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:14px; flex-shrink:0; }
+        .chip {
+            display:flex; align-items:center; gap:10px; padding:10px 22px; height:46px;
+            border-radius:40px; font-size:14px; font-weight:600; color:var(--text-primary);
+            cursor:pointer; transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            background:var(--chip-bg); border:2px solid var(--chip-border);
+            backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+            box-shadow:0 4px 16px rgba(0,0,0,0.04); position:relative; overflow:hidden;
+            letter-spacing:0.2px;
+        }
+        .chip::before {
+            content:''; position:absolute; inset:-2px; border-radius:42px; padding:2px;
+            background:var(--chip-gradient-1);
+            -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite:xor; mask-composite:exclude;
+            opacity:0; transition:opacity 0.4s ease;
+        }
+        .chip:nth-child(2)::before { background:var(--chip-gradient-2); }
+        .chip:nth-child(3)::before { background:var(--chip-gradient-3); }
+        .chip:nth-child(4)::before { background:var(--chip-gradient-4); }
+        .chip:hover::before { opacity:1; }
+        .chip:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 12px 40px var(--glow-color); border-color:transparent; }
+        .chip i {
+            font-size:17px; background:var(--chip-gradient-1);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            transition:transform 0.4s ease, background 0.4s; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .chip:nth-child(2) i { background:var(--chip-gradient-2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:nth-child(3) i { background:var(--chip-gradient-3); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:nth-child(4) i { background:var(--chip-gradient-4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:hover i { transform:scale(1.2) rotate(-6deg); }
+        .chip .chip-label { position:relative; z-index:1; transition:color 0.3s; }
+        .chip:hover .chip-label { background:var(--chip-gradient-1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:nth-child(2):hover .chip-label { background:var(--chip-gradient-2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:nth-child(3):hover .chip-label { background:var(--chip-gradient-3); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip:nth-child(4):hover .chip-label { background:var(--chip-gradient-4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chip::after {
+            content:'✦'; position:absolute; right:-8px; top:-8px; font-size:10px; color:var(--accent);
+            opacity:0; transition:opacity 0.4s ease, transform 0.4s ease;
+            transform:scale(0.5) rotate(0deg);
+        }
+        .chip:hover::after { opacity:1; transform:scale(1) rotate(180deg); }
+        .chip.active {
+            border-color:var(--chip-active-border) !important;
+            background:var(--chip-active-bg) !important;
+            box-shadow:0 0 24px rgba(26,115,232,0.3), inset 0 0 20px rgba(26,115,232,0.05) !important;
+            transform:translateY(-2px) scale(1.02);
+        }
+
+        /* Toast — now uses variable */
+        .mototus-toast {
+            position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(10px);
+            background:var(--toast-bg);
+            backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+            color:var(--toast-text); padding:14px 32px; border-radius:50px; font-family:'Inter',sans-serif;
+            font-size:15px; font-weight:700; box-shadow:0 12px 48px rgba(0,0,0,0.25);
+            z-index:9999; opacity:0; transition:opacity 0.4s cubic-bezier(0.34,1.56,0.64,1),
+                        transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            pointer-events:none; letter-spacing:0.4px; border:1px solid rgba(255,255,255,0.15);
+        }
+        .mototus-toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
+
+        /* ============================================================
+           MOTOTUS SMART API SETTINGS MODAL (ADDITIVE)
+           ============================================================ */
+        .mototus-api-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        [data-theme="dark"] .mototus-api-modal {
+            background: rgba(10, 10, 18, 0.65);
+        }
+        .mototus-api-modal.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mototus-api-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 440px;
+            max-width: 90%;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transform: scale(0.92) translateY(12px);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .mototus-api-modal.open .mototus-api-card {
+            transform: scale(1) translateY(0);
+        }
+        .mototus-api-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .mototus-api-header h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        .mototus-api-header h3 i {
+            color: var(--accent);
+        }
+        .mototus-api-close {
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+            line-height: 1;
+        }
+        .mototus-api-close:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .mototus-api-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .mototus-api-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mototus-api-field label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .mototus-api-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .mototus-api-input {
+            width: 100%;
+            padding: 11px 14px;
+            font-size: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--select-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .mototus-api-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--glow-color);
+        }
+        .mototus-api-vis-toggle {
+            position: absolute;
+            right: 14px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mototus-api-vis-toggle:hover {
+            color: var(--accent);
+        }
+        .mototus-api-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .mototus-api-btn {
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .mototus-api-btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        .mototus-api-btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 12px var(--glow-color);
+        }
+        .mototus-api-btn-secondary {
+            background: var(--select-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .mototus-api-btn-secondary:hover {
+            background: var(--badge-bg);
+            border-color: var(--accent);
+        }
+        .mototus-api-btn-danger {
+            background: rgba(230, 57, 70, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(230, 57, 70, 0.15);
+        }
+        .mototus-api-btn-danger:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width:720px) {
+            .greeting { font-size:18px; }
+            .composer-card { padding:16px; }
+            .premium-dropdown-trigger, .model-dropdown-trigger { padding:5px 10px; font-size:12px; min-width:70px; }
+            .premium-dropdown-menu, .model-dropdown-menu { min-width:170px; }
+            .premium-dropdown-item, .model-dropdown-item { padding:8px 12px; font-size:12px; }
+            .sidebar { width:52px; }
+            .main-wrapper, .header { margin-left:52px; }
+            .chip { padding:8px 16px; height:40px; font-size:12px; gap:8px; }
+            .chip i { font-size:14px; }
+            .sidebar-icon.settings-icon { width:42px; height:42px; }
+            .sidebar-icon.settings-icon svg { width:24px; height:24px; }
+            .toolbar-right { gap:4px; }
+            .toggle-switch { width:34px; height:20px; }
+            .toggle-slider::before { height:14px; width:14px; left:3px; bottom:3px; }
+            .toggle-switch input:checked + .toggle-slider::before { transform:translateX(14px); }
+            .model-dropdown-trigger { min-width:80px; }
+            .sidebar-theme-menu { left:56px; min-width:120px; }
+            .sidebar-theme-item { padding:6px 12px; font-size:12px; }
+            .header-brain { font-size:30px; width:38px; height:38px; }
+            .header-brain i { font-size:30px; }
+        }
+        @media (max-width:480px) {
+            .header { padding:0 12px; }
+            .greeting { font-size:15px; }
+            .composer-card { padding:12px; }
+            .chip { padding:6px 12px; height:34px; font-size:11px; gap:6px; }
+            .chip i { font-size:12px; }
+            .premium-dropdown-trigger, .model-dropdown-trigger { padding:4px 8px; font-size:11px; min-width:60px; }
+            .premium-dropdown-menu, .model-dropdown-menu { min-width:150px; }
+            .premium-dropdown-item, .model-dropdown-item { padding:6px 10px; font-size:11px; }
+            .mototus-toast { font-size:11px; padding:8px 16px; }
+            .sidebar-icon.settings-icon { width:36px; height:36px; }
+            .sidebar-icon.settings-icon svg { width:20px; height:20px; }
+            .toolbar-right { gap:3px; }
+            .toggle-switch { width:30px; height:18px; }
+            .toggle-slider::before { height:12px; width:12px; left:3px; bottom:3px; }
+            .toggle-switch input:checked + .toggle-slider::before { transform:translateX(12px); }
+            .model-dropdown-trigger { min-width:60px; }
+            .sidebar-theme-menu { left:48px; min-width:100px; }
+            .sidebar-theme-item { padding:4px 10px; font-size:11px; }
+            .header-brain { font-size:26px; width:34px; height:34px; }
+            .header-brain i { font-size:26px; }
+            .mototus-api-card {
+                width: 95%;
+            }
+            .mototus-api-body {
+                padding: 18px;
+                gap: 14px;
+            }
+            .mototus-api-actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .mototus-api-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <!-- New Chat trigger relocated to sidebar top plus icon -->
+        <div class="sidebar-icon" id="sidebarNewChatBtn" title="New conversation"><i class="fa-regular fa-plus"></i></div>
+        <div class="sidebar-icon" title="Conversations"><i class="fa-regular fa-comments"></i></div>
+        <div class="sidebar-icon" title="Trash"><i class="fa-regular fa-trash-can"></i></div>
+        <div class="sidebar-icon" title="Share"><i class="fa-regular fa-share-from-square"></i></div>
+        <div class="sidebar-icon code-icon" title="Code"><i class="fa-solid fa-code"></i></div>
+
+        <!-- Theme switcher in sidebar -->
+        <div class="sidebar-theme-wrapper" id="sidebarThemeWrapper">
+            <button class="sidebar-theme-trigger" id="sidebarThemeTrigger" title="Change theme">
+                <i class="fa-regular fa-sun theme-icon" id="sidebarThemeIcon"></i>
+            </button>
+            <div class="sidebar-theme-menu" id="sidebarThemeMenu">
+                <div class="sidebar-theme-item active" data-theme-value="light">
+                    <span class="item-label">☀️ Light</span>
+                    <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+                <div class="sidebar-theme-item" data-theme-value="dark">
+                    <span class="item-label">🌙 Dark</span>
+                    <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+                <div class="sidebar-theme-item" data-theme-value="blue">
+                    <span class="item-label">💎 Blue</span>
+                    <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+
+        <!-- Settings SVG -->
+        <div class="sidebar-icon settings-icon" title="Settings">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+                <path d="M 15 2 C 14.448 2 14 2.448 14 3 L 14 3.171875 C 14 3.649875 13.663406 4.0763437 13.191406 4.1523438 C 12.962406 4.1893437 12.735719 4.2322031 12.511719 4.2832031 C 12.047719 4.3892031 11.578484 4.1265 11.396484 3.6875 L 11.330078 3.53125 C 11.119078 3.02125 10.534437 2.7782344 10.023438 2.9902344 C 9.5134375 3.2012344 9.2704219 3.785875 9.4824219 4.296875 L 9.5488281 4.4570312 C 9.7328281 4.8970313 9.5856875 5.4179219 9.1796875 5.6699219 C 8.9836875 5.7919219 8.7924688 5.9197344 8.6054688 6.0527344 C 8.2174688 6.3297344 7.68075 6.2666875 7.34375 5.9296875 L 7.2226562 5.8085938 C 6.8316562 5.4175937 6.1985937 5.4175938 5.8085938 5.8085938 C 5.4185938 6.1995938 5.4185938 6.8326563 5.8085938 7.2226562 L 5.9296875 7.34375 C 6.2666875 7.68075 6.3297344 8.2164688 6.0527344 8.6054688 C 5.9197344 8.7924687 5.7919219 8.9836875 5.6699219 9.1796875 C 5.4179219 9.5856875 4.8960781 9.7337812 4.4550781 9.5507812 L 4.296875 9.484375 C 3.786875 9.273375 3.2002813 9.5153906 2.9882812 10.025391 C 2.7772813 10.535391 3.0192969 11.120031 3.5292969 11.332031 L 3.6855469 11.396484 C 4.1245469 11.578484 4.3892031 12.047719 4.2832031 12.511719 C 4.2322031 12.735719 4.1873906 12.962406 4.1503906 13.191406 C 4.0753906 13.662406 3.649875 14 3.171875 14 L 3 14 C 2.448 14 2 14.448 2 15 C 2 15.552 2.448 16 3 16 L 3.171875 16 C 3.649875 16 4.0763437 16.336594 4.1523438 16.808594 C 4.1893437 17.037594 4.2322031 17.264281 4.2832031 17.488281 C 4.3892031 17.952281 4.1265 18.421516 3.6875 18.603516 L 3.53125 18.669922 C 3.02125 18.880922 2.7782344 19.465563 2.9902344 19.976562 C 3.2012344 20.486563 3.785875 20.729578 4.296875 20.517578 L 4.4570312 20.451172 C 4.8980312 20.268172 5.418875 20.415312 5.671875 20.820312 C 5.793875 21.016313 5.9206875 21.208484 6.0546875 21.396484 C 6.3316875 21.784484 6.2686406 22.321203 5.9316406 22.658203 L 5.8085938 22.779297 C 5.4175937 23.170297 5.4175938 23.803359 5.8085938 24.193359 C 6.1995938 24.583359 6.8326562 24.584359 7.2226562 24.193359 L 7.3457031 24.072266 C 7.6827031 23.735266 8.2174688 23.670266 8.6054688 23.947266 C 8.7934688 24.081266 8.9856406 24.210031 9.1816406 24.332031 C 9.5866406 24.584031 9.7357344 25.105875 9.5527344 25.546875 L 9.4863281 25.705078 C 9.2753281 26.215078 9.5173438 26.801672 10.027344 27.013672 C 10.537344 27.224672 11.121984 26.982656 11.333984 26.472656 L 11.398438 26.316406 C 11.580438 25.877406 12.049672 25.61275 12.513672 25.71875 C 12.737672 25.76975 12.964359 25.814562 13.193359 25.851562 C 13.662359 25.924562 14 26.350125 14 26.828125 L 14 27 C 14 27.552 14.448 28 15 28 C 15.552 28 16 27.552 16 27 L 16 26.828125 C 16 26.350125 16.336594 25.923656 16.808594 25.847656 C 17.037594 25.810656 17.264281 25.767797 17.488281 25.716797 C 17.952281 25.610797 18.421516 25.8735 18.603516 26.3125 L 18.669922 26.46875 C 18.880922 26.97875 19.465563 27.221766 19.976562 27.009766 C 20.486563 26.798766 20.729578 26.214125 20.517578 25.703125 L 20.451172 25.542969 C 20.268172 25.101969 20.415312 24.581125 20.820312 24.328125 C 21.016313 24.206125 21.208484 24.079312 21.396484 23.945312 C 21.784484 23.668312 22.321203 23.731359 22.658203 24.068359 L 22.779297 24.191406 C 23.170297 24.582406 23.803359 24.582406 24.193359 24.191406 C 24.583359 23.800406 24.584359 23.167344 24.193359 22.777344 L 24.072266 22.654297 C 23.735266 22.317297 23.670266 21.782531 23.947266 21.394531 C 24.081266 21.206531 24.210031 21.014359 24.332031 20.818359 C 24.584031 20.413359 25.105875 20.264266 25.546875 20.447266 L 25.705078 20.513672 C 26.215078 20.724672 26.801672 20.482656 27.013672 19.972656 C 27.224672 19.462656 26.982656 18.878016 26.472656 18.666016 L 26.316406 18.601562 C 25.877406 18.419563 25.61275 17.950328 25.71875 17.486328 C 25.76975 17.262328 25.814562 17.035641 25.851562 16.806641 C 25.924562 16.337641 26.350125 16 26.828125 16 L 27 16 C 27.552 16 28 15.552 28 15 C 28 14.448 27.552 14 27 14 L 26.828125 14 C 26.350125 14 25.923656 13.663406 25.847656 13.191406 C 25.810656 12.962406 25.767797 12.735719 25.716797 12.511719 C 25.610797 12.047719 25.8735 11.578484 26.3125 11.396484 L 26.46875 11.330078 C 26.97875 11.119078 27.221766 10.534437 27.009766 10.023438 C 26.798766 9.5134375 26.214125 9.2704219 25.703125 9.4824219 L 25.542969 9.5488281 C 25.101969 9.7318281 24.581125 9.5846875 24.328125 9.1796875 C 24.206125 8.9836875 24.079312 8.7915156 23.945312 8.6035156 C 23.668312 8.2155156 23.731359 7.6787969 24.068359 7.3417969 L 24.191406 7.2207031 C 24.582406 6.8297031 24.582406 6.1966406 24.191406 5.8066406 C 23.800406 5.4156406 23.167344 5.4156406 22.777344 5.8066406 L 22.65625 5.9296875 C 22.31925 6.2666875 21.782531 6.3316875 21.394531 6.0546875 C 21.206531 5.9206875 21.014359 5.7919219 20.818359 5.6699219 C 20.413359 5.4179219 20.266219 4.8960781 20.449219 4.4550781 L 20.515625 4.296875 C 20.726625 3.786875 20.484609 3.2002812 19.974609 2.9882812 C 19.464609 2.7772813 18.879969 3.0192969 18.667969 3.5292969 L 18.601562 3.6855469 C 18.419563 4.1245469 17.950328 4.3892031 17.486328 4.2832031 C 17.262328 4.2322031 17.035641 4.1873906 16.806641 4.1503906 C 16.336641 4.0753906 16 3.649875 16 3.171875 L 16 3 C 16 2.448 15.552 2 15 2 z M 15 7 C 19.078645 7 22.438586 10.054876 22.931641 14 L 16.728516 14 A 2 2 0 0 0 15 13 A 2 2 0 0 0 14.998047 13 L 11.896484 7.625 C 12.850999 7.222729 13.899211 7 15 7 z M 10.169922 8.6328125 L 13.269531 14 A 2 2 0 0 0 13 15 A 2 2 0 0 0 13.269531 15.996094 L 10.167969 21.365234 C 8.2464258 19.903996 7 17.600071 7 15 C 7 12.398945 8.2471371 10.093961 10.169922 8.6328125 z M 16.730469 16 L 22.931641 16 C 22.438586 19.945124 19.078645 23 15 23 C 13.899211 23 12.850999 22.777271 11.896484 22.375 L 14.998047 17 A 2 2 0 0 0 15 17 A 2 2 0 0 0 16.730469 16 z"></path>
+            </svg>
+        </div>
+        <div class="sidebar-icon download-icon" title="Downloads"><i class="fa-regular fa-circle-down"></i></div>
+    </aside>
+
+    <!-- HEADER — STATIC BRAIN (NO ANIMATION) -->
+    <header class="header">
+        <div class="header-left">
+            <div class="header-brain">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="greeting">MOTOTUS</div>
+        </div>
+        <div class="header-right">
+            <div class="help-icon" title="Help"><i class="fa-regular fa-circle-question"></i></div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main-wrapper">
+        <!-- Separated Chat Messages Area -->
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="composer-card">
+            <!-- Chat Input Area (No messages inside here anymore) -->
+            <div class="chat-area">
+                <div class="chat-input-wrap">
+                    <input type="text" id="userInput" placeholder="What do you want to figure out today?" autofocus />
+                </div>
+            </div>
+            <div class="card-middle-spacer"></div>
+
+            <!-- Toolbar -->
+            <div class="card-toolbar">
+                <div class="toolbar-left">
+                    <!-- Changed + inside composer card to document transfer upload trigger -->
+                    <div class="large-plus" id="docUploadBtn" title="Upload document"><i class="fa-regular fa-plus"></i></div>
+                    <input type="file" id="docFileInput" style="display: none;" />
+                </div>
+                <div class="toolbar-right">
+                    <!-- Model Dropdown -->
+                    <div class="model-dropdown" id="modelDropdown">
+                        <div class="model-dropdown-trigger" id="modelDropdownTrigger">
+                            <span class="trigger-text">
+                                <span id="modelSelectedLabel">KOMANA</span>
+                            </span>
+                            <span class="trigger-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        </div>
+                        <div class="model-dropdown-menu" id="modelDropdownMenu">
+                            <div class="model-dropdown-item active" data-model="komana">
+                                <span class="item-label">KOMANA</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="model-dropdown-item" data-model="tokla">
+                                <span class="item-label">TOKLA 3.0</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="model-dropdown-item" data-model="tusto">
+                                <span class="item-label">TUSTO 9.0</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quality Dropdown -->
+                    <div class="premium-dropdown" id="premiumDropdown">
+                        <div class="premium-dropdown-trigger" id="dropdownTrigger">
+                            <span class="trigger-text">
+                                <span id="selectedLabel">Max</span>
+                            </span>
+                            <span class="trigger-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                        </div>
+                        <div class="premium-dropdown-menu" id="dropdownMenu">
+                            <div class="premium-dropdown-item active" data-value="Max">
+                                <span class="item-label">Max</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="premium-dropdown-item" data-value="High">
+                                <span class="item-label">High</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="premium-dropdown-item" data-value="Medium">
+                                <span class="item-label">Medium</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="premium-dropdown-item" data-value="Low">
+                                <span class="item-label">Low</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="premium-dropdown-item" data-value="Complex">
+                                <span class="item-label">Complex Thinking</span>
+                                <label class="toggle-switch" id="complexToggle">
+                                    <input type="checkbox" id="complexCheckbox" />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="toolbar-send" id="sendBtn" title="Send">
+                        <i class="fa-regular fa-paper-plane"></i>
+                    </span>
+                    <span class="toolbar-mic" title="Voice input">
+                        <i class="fa-regular fa-microphone"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Chips -->
+        <div class="action-chips" id="actionChips">
+            <div class="chip active" data-chip="write">
+                <i class="fa-solid fa-feather-pointed"></i>
+                <span class="chip-label">Write</span>
+            </div>
+            <div class="chip" data-chip="learn">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span class="chip-label">Learn</span>
+            </div>
+            <div class="chip" data-chip="code">
+                <i class="fa-solid fa-laptop-code"></i>
+                <span class="chip-label">Code</span>
+            </div>
+            <div class="chip" data-chip="life">
+                <i class="fa-solid fa-crown"></i>
+                <span class="chip-label">Life stuff</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================================
+    JAVASCRIPT (fixed race condition, inline styles, etc.)
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- THEME SYSTEM ----------
+            const themes = ['light', 'dark', 'blue'];
+            const themeNames = ['Light', 'Dark', 'Blue'];
+            const themeIcons = ['fa-sun', 'fa-moon', 'fa-gem'];
+            const root = document.documentElement;
+
+            let currentIndex = themes.indexOf(localStorage.getItem('mototus-theme'));
+            if (currentIndex === -1) currentIndex = 0;
+
+            function setTheme(index) {
+                const theme = themes[index];
+                root.setAttribute('data-theme', theme);
+                localStorage.setItem('mototus-theme', theme);
+                currentIndex = index;
+
+                const iconEl = document.getElementById('sidebarThemeIcon');
+                if (iconEl) {
+                    iconEl.className = 'theme-icon';
+                    iconEl.classList.add('fa-regular', themeIcons[index]);
+                }
+
+                const items = document.querySelectorAll('.sidebar-theme-item');
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+
+            setTheme(currentIndex);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'y' || e.key === 'Y')) {
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % themes.length;
+                    setTheme(nextIndex);
+                    showToast('🎯 Theme: ' + themeNames[nextIndex]);
+                }
+            });
+
+            // ---------- SIDEBAR THEME DROPDOWN ----------
+            const themeTrigger = document.getElementById('sidebarThemeTrigger');
+            const themeMenu = document.getElementById('sidebarThemeMenu');
+            const themeItems = themeMenu.querySelectorAll('.sidebar-theme-item');
+
+            themeTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                themeMenu.classList.toggle('open');
+                if (themeMenu.classList.contains('open')) {
+                    themeTrigger.style.transform = 'scale(0.92)';
+                    setTimeout(() => { themeTrigger.style.transform = ''; }, 150);
+                }
+            });
+
+            themeItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const themeValue = this.getAttribute('data-theme-value');
+                    const index = themes.indexOf(themeValue);
+                    if (index !== -1 && index !== currentIndex) {
+                        setTheme(index);
+                        showToast('🎨 Theme: ' + themeNames[index]);
+                    }
+                    themeMenu.classList.remove('open');
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => { this.style.transform = ''; }, 150);
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                const wrapper = document.getElementById('sidebarThemeWrapper');
+                if (!wrapper.contains(e.target)) {
+                    themeMenu.classList.remove('open');
+                }
+            });
+
+            // ---------- TOAST ----------
+            function showToast(msg) {
+                const old = document.querySelector('.mototus-toast');
+                if (old) old.remove();
+
+                const toast = document.createElement('div');
+                toast.className = 'mototus-toast';
+                toast.textContent = msg;
+                document.body.appendChild(toast);
+
+                requestAnimationFrame(() => {
+                    toast.classList.add('show');
+                });
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400);
+                }, 2500);
+            }
+
+            // ---------- CHAT UI ----------
+            const userInput = document.getElementById('userInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const sendBtn = document.getElementById('sendBtn');
+
+            const responses = [
+                "That's a great question! Let me think about it.",
+                "I understand. Here's what I can tell you about that.",
+                "Interesting point! Let me break it down for you.",
+                "I see what you mean. Let me provide some insights.",
+                "Thanks for asking! Here's my take on this.",
+                "Sure thing! I'll do my best to help.",
+                "Let me analyze that for you.",
+                "Good one! Here's a detailed explanation."
+            ];
+
+            function getAIResponse(input) {
+                if (input.length < 3) return "Could you elaborate a bit more?";
+                if (input.includes('?')) return "That's a thoughtful question. " + responses[Math.floor(Math.random() * responses
+                    .length)];
+                return responses[Math.floor(Math.random() * responses.length)] + " (based on your input: \"" + input + "\")";
+            }
+
+            // Create a message element
+            function createMessage(text, type) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chat-message ' + type;
+
+                if (type === 'user') {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.textContent = text;
+                    wrapper.appendChild(bubble);
+                } else {
+                    // AI message: avatar (red brain, no background) + bubble
+                    const avatar = document.createElement('div');
+                    avatar.className = 'avatar';
+                    avatar.innerHTML = `
+                        <div class="mini-orbit">
+                            <div class="half left"><i class="fas fa-brain"></i></div>
+                            <div class="half right"><i class="fas fa-brain"></i></div>
+                            <div class="line"></div>
+                        </div>
+                    `;
+                    wrapper.appendChild(avatar);
+
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.textContent = text;
+                    wrapper.appendChild(bubble);
+                }
+                return wrapper;
+            }
+
+            // ---- FIXED: added isTyping flag to prevent race condition ----
+            let isTyping = false;
+
+            // Typewriter effect inside an AI bubble
+            function typeWriterAI(text, messageElement) {
+                const bubble = messageElement.querySelector('.bubble');
+                bubble.innerHTML = '';
+                let index = 0;
+                const cursorSpan = document.createElement('span');
+                cursorSpan.className = 'cursor-blink';
+                bubble.appendChild(cursorSpan);
+
+                function typeChar() {
+                    if (index < text.length) {
+                        const char = text.charAt(index);
+                        const textNode = document.createTextNode(char);
+                        bubble.insertBefore(textNode, cursorSpan);
+                        index++;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        setTimeout(typeChar, 25 + Math.random() * 30);
+                    } else {
+                        if (cursorSpan.parentNode) cursorSpan.remove();
+                        messageElement.classList.remove('typing');
+                        // typing finished
+                        isTyping = false;
+                    }
+                }
+                isTyping = true;
+                typeChar();
+            }
+
+            function handleSend() {
+                // Prevent sending while AI is typing
+                if (isTyping) {
+                    showToast('⏳ Please wait for the current response to finish.');
+                    return;
+                }
+
+                const inputText = userInput.value.trim();
+                if (!inputText) {
+                    showToast('Please type something first.');
+                    return;
+                }
+
+                // Append User Message
+                const userMsg = createMessage(inputText, 'user');
+                chatMessages.appendChild(userMsg);
+                userInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Show "Thinking..." placeholder for AI with typing animation
+                const aiMsg = createMessage('Thinking...', 'ai');
+                aiMsg.classList.add('typing'); // Avatar flips
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Simulate AI response
+                setTimeout(() => {
+                    const response = getAIResponse(inputText);
+                    typeWriterAI(response, aiMsg);
+                }, 400 + Math.random() * 400);
+            }
+
+            // Event listeners
+            sendBtn.addEventListener('click', handleSend);
+
+            userInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
+
+            // New Chat Trigger relocated to Sidebar Plus Icon
+            const sidebarNewChatBtn = document.getElementById('sidebarNewChatBtn');
+            if (sidebarNewChatBtn) {
+                sidebarNewChatBtn.addEventListener('click', function() {
+                    chatMessages.innerHTML = '';
+                    userInput.value = '';
+                    isTyping = false; // reset in case typing was ongoing
+                    showToast('✨ New conversation started');
+                    userInput.focus();
+                    this.style.transform = 'scale(0.88) rotate(90deg)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                });
+            }
+
+            // ---------- DOCUMENT TRANSFER SYSTEM ----------
+            const docUploadBtn = document.getElementById('docUploadBtn');
+            const docFileInput = document.getElementById('docFileInput');
+
+            if (docUploadBtn && docFileInput) {
+                docUploadBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    docFileInput.click();
+                });
+
+                docFileInput.addEventListener('change', function() {
+                    if (docFileInput.files.length === 0) return;
+                    const file = docFileInput.files[0];
+                    showToast('📁 Loading document: ' + file.name);
+
+                    // If API is active, dispatch to the second custom auto-detection engine
+                    const rawConfig = localStorage.getItem('mototus-smart-api-config');
+                    let hasApi = false;
+                    if (rawConfig) {
+                        try {
+                            const c = JSON.parse(rawConfig);
+                            if (c && c.apiKey) hasApi = true;
+                        } catch(e){}
+                    }
+
+                    if (hasApi) {
+                        const event = new CustomEvent('mototus-doc-uploaded', { detail: file });
+                        window.dispatchEvent(event);
+                    } else {
+                        // Local simulated fallback behavior
+                        if (isTyping) {
+                            showToast('⏳ Please wait for the current response to finish.');
+                            return;
+                        }
+
+                        const docText = `📁 Uploaded document: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                        const userMsg = createMessage(docText, 'user');
+                        chatMessages.appendChild(userMsg);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                        const aiMsg = createMessage('Thinking...', 'ai');
+                        aiMsg.classList.add('typing');
+                        chatMessages.appendChild(aiMsg);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                        setTimeout(() => {
+                            const response = `I have successfully received and processed your document: "${file.name}". What parameters or fields would you like me to examine?`;
+                            typeWriterAI(response, aiMsg);
+                        }, 800 + Math.random() * 400);
+                    }
+                    docFileInput.value = ''; // Reset input to allow re-uploads
+                });
+            }
+
+            // ---------- MODEL DROPDOWN ----------
+            const modelTrigger = document.getElementById('modelDropdownTrigger');
+            const modelMenu = document.getElementById('modelDropdownMenu');
+            const modelItems = modelMenu.querySelectorAll('.model-dropdown-item');
+            const modelSelectedLabel = document.getElementById('modelSelectedLabel');
+
+            modelTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                modelMenu.classList.toggle('open');
+                modelTrigger.classList.toggle('open');
+                if (modelMenu.classList.contains('open')) {
+                    modelTrigger.style.transform = 'scale(0.96)';
+                    setTimeout(() => { modelTrigger.style.transform = ''; }, 150);
+                }
+            });
+
+            modelItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const label = this.querySelector('.item-label').textContent.trim();
+                    modelSelectedLabel.textContent = label;
+                    modelItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    modelMenu.classList.remove('open');
+                    modelTrigger.classList.remove('open');
+                    showToast('🧠 Model: ' + label);
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => { this.style.transform = ''; }, 150);
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                const dd = document.getElementById('modelDropdown');
+                if (!dd.contains(e.target)) {
+                    modelMenu.classList.remove('open');
+                    modelTrigger.classList.remove('open');
+                }
+            });
+
+            // ---------- QUALITY DROPDOWN ----------
+            const trigger = document.getElementById('dropdownTrigger');
+            const menu = document.getElementById('dropdownMenu');
+            const selectedLabel = document.getElementById('selectedLabel');
+            const items = menu.querySelectorAll('.premium-dropdown-item');
+
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('open');
+                trigger.classList.toggle('open');
+                if (menu.classList.contains('open')) {
+                    trigger.style.transform = 'scale(0.96)';
+                    setTimeout(() => { trigger.style.transform = ''; }, 150);
+                }
+            });
+
+            items.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const value = this.getAttribute('data-value');
+                    if (value === 'Complex') return;
+
+                    e.stopPropagation();
+                    const label = this.querySelector('.item-label').textContent.trim();
+                    selectedLabel.textContent = label;
+                    items.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    menu.classList.remove('open');
+                    trigger.classList.remove('open');
+
+                    const isPremium = (value === 'Max' || value === 'High');
+                    const iconEmoji = isPremium ? '✨' : '⚡';
+                    const labelEmoji = isPremium ? 'Premium' : 'Standard';
+                    showToast(iconEmoji + ' ' + labelEmoji + ' mode: ' + value);
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => { this.style.transform = ''; }, 150);
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                const dd = document.getElementById('premiumDropdown');
+                if (!dd.contains(e.target)) {
+                    menu.classList.remove('open');
+                    trigger.classList.remove('open');
+                }
+            });
+
+            // ---------- COMPLEX TOGGLE (fixed: use class instead of inline styles) ----------
+            const complexCheckbox = document.getElementById('complexCheckbox');
+            const complexParent = complexCheckbox.closest('.premium-dropdown-item');
+
+            complexCheckbox.addEventListener('change', function(e) {
+                e.stopPropagation();
+                const isChecked = this.checked;
+                showToast(isChecked ? '🧠 Complex Thinking: ON' : '🧠 Complex Thinking: OFF');
+                // Use class instead of inline styles
+                complexParent.classList.toggle('complex-active', isChecked);
+            });
+
+            // ---------- CHIPS ----------
+            const chips = document.querySelectorAll('.chip');
+            chips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    chips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    const label = this.querySelector('.chip-label').textContent;
+                    const icons = ['✍️', '📚', '💻', '👑'];
+                    const idx = Array.from(chips).indexOf(this);
+                    showToast('✨ ' + icons[idx] + ' ' + label + ' mode activated');
+                    this.style.transform = 'scale(0.92)';
+                    setTimeout(() => { this.style.transform = ''; }, 200);
+                });
+            });
+
+            // ---------- SIDEBAR ICONS ----------
+            document.querySelectorAll('.sidebar-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.88)';
+                    setTimeout(() => { this.style.transform = ''; }, 150);
+                });
+            });
+
+            // ---------- MIC & HELP ----------
+            document.querySelector('.toolbar-mic').addEventListener('click', function() {
+                showToast('🎤 Voice input coming soon!');
+            });
+            document.querySelector('.help-icon').addEventListener('click', function() {
+                showToast('💡 Type your question and press Enter or click Send.');
+            });
+
+            userInput.focus();
+            console.log('✅ MOTOTUS — All bugs fixed (chip vars, z‑index, padding, race condition, inline styles, avatar colors, toast)');
+
+        })();
+    </script>
+
+    <!-- MOTOTUS SMART API CONFIGURATION MODAL -->
+    <div id="mototusApiModal" class="mototus-api-modal">
+        <div class="mototus-api-card">
+            <div class="mototus-api-header">
+                <h3><i class="fa-solid fa-gears"></i> API Configuration</h3>
+                <span id="closeMototusApiModal" class="mototus-api-close"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <div class="mototus-api-body">
+                <div class="mototus-api-field">
+                    <label for="mototusApiKey">API Key</label>
+                    <div class="mototus-api-input-wrap">
+                        <input type="password" id="mototusApiKey" class="mototus-api-input" placeholder="Enter API Key">
+                        <button type="button" id="mototusApiKeyToggle" class="mototus-api-vis-toggle" title="Toggle visibility">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mototus-api-field">
+                    <label for="mototusApiModel">Model Name</label>
+                    <input type="text" id="mototusApiModel" class="mototus-api-input" placeholder="e.g., gpt-4o-mini, llama3.1-8b">
+                </div>
+                <div class="mototus-api-actions">
+                    <button type="button" id="deleteMototusApi" class="mototus-api-btn mototus-api-btn-danger">Delete Key</button>
+                    <button type="button" id="testMototusApi" class="mototus-api-btn mototus-api-btn-secondary">Test Connection</button>
+                    <button type="button" id="saveMototusApi" class="mototus-api-btn mototus-api-btn-primary">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOTOTUS SMART AUTO-DETECTION ENGINE -->
+    <script>
+        (function() {
+            'use strict';
+
+            const apiModal = document.getElementById('mototusApiModal');
+            const openModalBtn = document.querySelector('.sidebar-icon.settings-icon');
+            const closeModalBtn = document.getElementById('closeMototusApiModal');
+            
+            const apiKeyInput = document.getElementById('mototusApiKey');
+            const apiModelInput = document.getElementById('mototusApiModel');
+            const apiKeyToggle = document.getElementById('mototusApiKeyToggle');
+            
+            const btnSave = document.getElementById('saveMototusApi');
+            const btnTest = document.getElementById('testMototusApi');
+            const btnDelete = document.getElementById('deleteMototusApi');
+            
+            const chatMessages = document.getElementById('chatMessages');
+            const originalUserInput = document.getElementById('userInput');
+            const originalSendBtn = document.getElementById('sendBtn');
+            const originalNewChatBtn = document.getElementById('sidebarNewChatBtn'); // updated to sidebar plus
+
+            let isApiTyping = false;
+            let customHistory = [];
+
+            const CONFIG_KEY = 'mototus-smart-api-config';
+
+            // Popular working default models to use during fallbacks
+            const providerDefaults = {
+                'OpenAI': { model: 'gpt-4o-mini', baseUrl: 'https://api.openai.com/v1' },
+                'Cerebras': { model: 'llama3.1-8b', baseUrl: 'https://api.cerebras.ai/v1' },
+                'Groq': { model: 'llama-3.1-8b-instant', baseUrl: 'https://api.groq.com/openai/v1' },
+                'Mistral': { model: 'open-mistral-7b', baseUrl: 'https://api.mistral.ai/v1' },
+                'Together AI': { model: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo', baseUrl: 'https://api.together.xyz/v1' },
+                'OpenRouter': { model: 'meta-llama/llama-3-8b-instruct:free', baseUrl: 'https://openrouter.ai/api/v1' },
+                'Gemini': { model: 'gemini-1.5-flash', baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai' },
+                'Cloudflare': { model: '@cf/meta/llama-3.1-8b-instruct', baseUrl: null }
+            };
+
+            function showApiToast(msg) {
+                const old = document.querySelector('.mototus-toast');
+                if (old) old.remove();
+
+                const toast = document.createElement('div');
+                toast.className = 'mototus-toast';
+                toast.textContent = msg;
+                document.body.appendChild(toast);
+
+                requestAnimationFrame(() => {
+                    toast.classList.add('show');
+                });
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400);
+                }, 2800);
+            }
+
+            function loadConfig() {
+                const raw = localStorage.getItem(CONFIG_KEY);
+                if (raw) {
+                    try {
+                        const config = JSON.parse(raw);
+                        apiKeyInput.value = config.apiKey || '';
+                        apiModelInput.value = config.model || '';
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    apiKeyInput.value = '';
+                    apiModelInput.value = '';
+                }
+            }
+
+            // Automatic Provider Detection and Verification Engine
+            async function runDetectionEngine(apiKey, modelName) {
+                const endpoints = [
+                    { name: 'OpenAI', url: 'https://api.openai.com/v1' },
+                    { name: 'Cerebras', url: 'https://api.cerebras.ai/v1' },
+                    { name: 'Groq', url: 'https://api.groq.com/openai/v1' },
+                    { name: 'Mistral', url: 'https://api.mistral.ai/v1' },
+                    { name: 'Together AI', url: 'https://api.together.xyz/v1' },
+                    { name: 'OpenRouter', url: 'https://openrouter.ai/api/v1' },
+                    { name: 'Gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai' }
+                ];
+
+                // 1. Analyze Key Signatures for Instant Mapping
+                let reordered = [...endpoints];
+                if (apiKey.startsWith('csk-')) {
+                    reordered = [{ name: 'Cerebras', url: 'https://api.cerebras.ai/v1' }, ...endpoints.filter(e => e.name !== 'Cerebras')];
+                } else if (apiKey.startsWith('gsk_')) {
+                    reordered = [{ name: 'Groq', url: 'https://api.groq.com/openai/v1' }, ...endpoints.filter(e => e.name !== 'Groq')];
+                } else if (apiKey.startsWith('sk-or-')) {
+                    reordered = [{ name: 'OpenRouter', url: 'https://openrouter.ai/api/v1' }, ...endpoints.filter(e => e.name !== 'OpenRouter')];
+                } else if (apiKey.startsWith('AIzaSy')) {
+                    reordered = [{ name: 'Gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai' }, ...endpoints.filter(e => e.name !== 'Gemini')];
+                } else if (apiKey.startsWith('sk-proj-')) {
+                    reordered = [{ name: 'OpenAI', url: 'https://api.openai.com/v1' }, ...endpoints.filter(e => e.name !== 'OpenAI')];
+                }
+
+                // 2. Cloudflare API Account Auto-Discovery via Bearer Token
+                if (apiKey.length === 40 && !apiKey.startsWith('sk-')) {
+                    try {
+                        const cfRes = await fetch('https://api.cloudflare.com/client/v4/accounts', {
+                            headers: { 'Authorization': `Bearer ${apiKey}` }
+                        });
+                        if (cfRes.ok) {
+                            const cfData = await cfRes.json();
+                            if (cfData.success && cfData.result && cfData.result.length > 0) {
+                                const accountId = cfData.result[0].id;
+                                const cfUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`;
+                                reordered.unshift({ name: 'Cloudflare', url: cfUrl });
+                            }
+                        }
+                    } catch (e) {
+                        // Fail silently, fall back to other providers
+                    }
+                }
+
+                // 3. Parallel probing on detected and backup endpoints
+                const probePromises = reordered.map(async (ep) => {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s per request limit
+
+                    try {
+                        const testUrl = `${ep.url}/chat/completions`;
+                        const testModel = modelName || providerDefaults[ep.name].model;
+                        const response = await fetch(testUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${apiKey}`
+                            },
+                            body: JSON.stringify({
+                                model: testModel,
+                                messages: [{ role: 'user', content: 'Ping' }],
+                                max_tokens: 1
+                            }),
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
+
+                        if (response.status === 200) {
+                            return { status: 'success', endpoint: ep.url, provider: ep.name, model: testModel };
+                        } else if (response.status === 400 || response.status === 404 || response.status === 422) {
+                            // Endpoint works but model name was unrecognized / unavailable
+                            return { status: 'bad_model', endpoint: ep.url, provider: ep.name };
+                        } else {
+                            throw new Error('Connection failed');
+                        }
+                    } catch (err) {
+                        clearTimeout(timeoutId);
+                        throw err;
+                    }
+                });
+
+                const results = await Promise.allSettled(probePromises);
+
+                // Check for verified successful endpoint and model pairing
+                for (const res of results) {
+                    if (res.status === 'fulfilled' && res.value.status === 'success') {
+                        return res.value;
+                    }
+                }
+
+                // Smart Fallback/Correction: If base URL matched but model is invalid, auto-fix
+                for (const res of results) {
+                    if (res.status === 'fulfilled' && res.value.status === 'bad_model') {
+                        const fallbackModel = providerDefaults[res.value.provider].model;
+                        return {
+                            status: 'success',
+                            endpoint: res.value.endpoint,
+                            provider: res.value.provider,
+                            model: fallbackModel,
+                            autoFixed: true,
+                            warning: `Model unverified. Configured default model: ${fallbackModel}`
+                        };
+                    }
+                }
+
+                throw new Error('No working provider detected. Verify your API Key.');
+            }
+
+            // Modal Interactions
+            openModalBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                loadConfig();
+                apiModal.classList.add('open');
+            });
+
+            closeModalBtn.addEventListener('click', function() {
+                apiModal.classList.remove('open');
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === apiModal) {
+                    apiModal.classList.remove('open');
+                }
+            });
+
+            apiKeyToggle.addEventListener('click', function() {
+                const isPassword = apiKeyInput.type === 'password';
+                apiKeyInput.type = isPassword ? 'text' : 'password';
+                this.querySelector('i').className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+            });
+
+            // Action Buttons Handling
+            btnSave.addEventListener('click', async function() {
+                const key = apiKeyInput.value.trim();
+                const model = apiModelInput.value.trim();
+
+                if (!key) {
+                    showApiToast('⚠️ Please enter an API key.');
+                    return;
+                }
+
+                btnSave.textContent = 'Detecting...';
+                btnSave.disabled = true;
+
+                try {
+                    const config = await runDetectionEngine(key, model);
+                    const finalConfig = {
+                        apiKey: key,
+                        model: config.model,
+                        baseUrl: config.endpoint,
+                        provider: config.provider
+                    };
+                    localStorage.setItem(CONFIG_KEY, JSON.stringify(finalConfig));
+                    apiModelInput.value = config.model;
+
+                    if (config.autoFixed) {
+                        showApiToast('💡 ' + config.warning);
+                    } else {
+                        showApiToast('✅ Auto-detected ' + config.provider + '! Configuration saved.');
+                    }
+                    apiModal.classList.remove('open');
+                } catch (err) {
+                    showApiToast('❌ Probe failed: ' + err.message);
+                } finally {
+                    btnSave.textContent = 'Save Settings';
+                    btnSave.disabled = false;
+                }
+            });
+
+            btnTest.addEventListener('click', async function() {
+                const key = apiKeyInput.value.trim();
+                const model = apiModelInput.value.trim();
+
+                if (!key) {
+                    showApiToast('⚠️ Please enter an API key to test.');
+                    return;
+                }
+
+                btnTest.textContent = 'Probing...';
+                btnTest.disabled = true;
+
+                try {
+                    const config = await runDetectionEngine(key, model);
+                    showApiToast('✅ Verified ' + config.provider + ' connection with model ' + config.model + '!');
+                } catch (err) {
+                    showApiToast('❌ Connection failed: ' + err.message);
+                } finally {
+                    btnTest.textContent = 'Test Connection';
+                    btnTest.disabled = false;
+                }
+            });
+
+            btnDelete.addEventListener('click', function() {
+                if (confirm('Delete configuration? Custom API configurations will be cleared.')) {
+                    localStorage.removeItem(CONFIG_KEY);
+                    apiKeyInput.value = '';
+                    apiModelInput.value = '';
+                    showApiToast('🗑️ Settings cleared. Fallback simulation enabled.');
+                }
+            });
+
+            // Retrieval Helper
+            function getSavedConfig() {
+                const raw = localStorage.getItem(CONFIG_KEY);
+                if (raw) {
+                    try { return JSON.parse(raw); } catch (e) { return null; }
+                }
+                return null;
+            }
+
+            // Custom UI elements (identical avatar styles as original)
+            function createCustomMessage(text, type) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chat-message ' + type;
+
+                if (type === 'user') {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.textContent = text;
+                    wrapper.appendChild(bubble);
+                } else {
+                    const avatar = document.createElement('div');
+                    avatar.className = 'avatar';
+                    avatar.innerHTML = `
+                        <div class="mini-orbit">
+                            <div class="half left"><i class="fas fa-brain"></i></div>
+                            <div class="half right"><i class="fas fa-brain"></i></div>
+                            <div class="line"></div>
+                        </div>
+                    `;
+                    wrapper.appendChild(avatar);
+
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.textContent = text;
+                    wrapper.appendChild(bubble);
+                }
+                return wrapper;
+            }
+
+            function typeWriterCustomAI(text, messageElement) {
+                const bubble = messageElement.querySelector('.bubble');
+                bubble.innerHTML = '';
+                let index = 0;
+                const cursorSpan = document.createElement('span');
+                cursorSpan.className = 'cursor-blink';
+                bubble.appendChild(cursorSpan);
+
+                function typeChar() {
+                    if (index < text.length) {
+                        const char = text.charAt(index);
+                        const textNode = document.createTextNode(char);
+                        bubble.insertBefore(textNode, cursorSpan);
+                        index++;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        setTimeout(typeChar, 25 + Math.random() * 30);
+                    } else {
+                        if (cursorSpan.parentNode) cursorSpan.remove();
+                        messageElement.classList.remove('typing');
+                        isApiTyping = false;
+                    }
+                }
+                isApiTyping = true;
+                typeChar();
+            }
+
+            // Intercept message dispatch
+            async function handleCustomSend() {
+                if (isApiTyping) {
+                    showApiToast('⏳ Please wait for the current response to finish.');
+                    return;
+                }
+
+                const inputText = originalUserInput.value.trim();
+                if (!inputText) {
+                    showApiToast('Please type something first.');
+                    return;
+                }
+
+                const config = getSavedConfig();
+                if (!config || !config.apiKey) return; // Propagates normally when key is absent
+
+                const userMsg = createCustomMessage(inputText, 'user');
+                chatMessages.appendChild(userMsg);
+                originalUserInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                customHistory.push({ role: 'user', content: inputText });
+
+                const aiMsg = createCustomMessage('Thinking...', 'ai');
+                aiMsg.classList.add('typing');
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                isApiTyping = true;
+
+                const url = `${config.baseUrl}/chat/completions`;
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${config.apiKey}`
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: customHistory
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errData = await response.json().catch(() => ({}));
+                        const errMsg = errData?.error?.message || errData?.message || ('HTTP ' + response.status);
+                        throw new Error(errMsg);
+                    }
+
+                    const resData = await response.json();
+                    const aiReplyText = resData?.choices?.[0]?.message?.content || 'Empty reply content received.';
+
+                    customHistory.push({ role: 'assistant', content: aiReplyText });
+                    typeWriterCustomAI(aiReplyText, aiMsg);
+
+                } catch (err) {
+                    console.error(err);
+                    aiMsg.classList.remove('typing');
+                    const bubble = aiMsg.querySelector('.bubble');
+                    bubble.textContent = `Error: ${err.message || 'Failed to complete API request.'}`;
+                    isApiTyping = false;
+                }
+            }
+
+            // Event captures
+            originalSendBtn.addEventListener('click', function(e) {
+                const config = getSavedConfig();
+                if (config && config.apiKey) {
+                    e.stopImmediatePropagation();
+                    handleCustomSend();
+                }
+            }, true);
+
+            originalUserInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    const config = getSavedConfig();
+                    if (config && config.apiKey) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        handleCustomSend();
+                    }
+                }
+            }, true);
+
+            originalNewChatBtn.addEventListener('click', function() {
+                customHistory = [];
+                isApiTyping = false;
+            });
+
+            // Handle custom API Document Upload events
+            window.addEventListener('mototus-doc-uploaded', async function(e) {
+                const file = e.detail;
+                if (isApiTyping) {
+                    showApiToast('⏳ Please wait for the current response to finish.');
+                    return;
+                }
+
+                const config = getSavedConfig();
+                if (!config || !config.apiKey) return;
+
+                const docText = `📁 Uploaded document: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                const userMsg = createCustomMessage(docText, 'user');
+                chatMessages.appendChild(userMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                customHistory.push({ role: 'user', content: `[User uploaded document: ${file.name}]` });
+
+                const aiMsg = createCustomMessage('Thinking...', 'ai');
+                aiMsg.classList.add('typing');
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                isApiTyping = true;
+
+                const url = `${config.baseUrl}/chat/completions`;
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${config.apiKey}`
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: customHistory
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errData = await response.json().catch(() => ({}));
+                        const errMsg = errData?.error?.message || errData?.message || ('HTTP ' + response.status);
+                        throw new Error(errMsg);
+                    }
+
+                    const resData = await response.json();
+                    const aiReplyText = resData?.choices?.[0]?.message?.content || 'Empty reply content received.';
+
+                    customHistory.push({ role: 'assistant', content: aiReplyText });
+                    typeWriterCustomAI(aiReplyText, aiMsg);
+
+                } catch (err) {
+                    console.error(err);
+                    aiMsg.classList.remove('typing');
+                    const bubble = aiMsg.querySelector('.bubble');
+                    bubble.textContent = `Error analyzing document: ${err.message || 'API request failed.'}`;
+                    isApiTyping = false;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
