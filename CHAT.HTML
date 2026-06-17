@@ -38,13 +38,10 @@
             --model-chip-border: rgba(230, 57, 70, 0.15);
             --model-chip-active-bg: rgba(230, 57, 70, 0.08);
             --model-chip-active-border: #e63946;
-            /* NEW: chip background & border */
             --chip-bg: rgba(255, 255, 255, 0.6);
             --chip-border: rgba(0, 0, 0, 0.08);
-            /* NEW: avatar brain colors (theme‑aware) */
             --avatar-brain-color: #e63946;
             --avatar-line-color: #ef4444;
-            /* NEW: toast background */
             --toast-bg: linear-gradient(135deg, rgba(230,57,70,0.85), rgba(255,107,122,0.75));
             --toast-text: #fff;
         }
@@ -153,7 +150,7 @@
         .sidebar-icon.code-icon { font-weight:700; font-size:16px; letter-spacing:-0.5px; }
         .sidebar-icon.code-icon i { font-weight:700; }
 
-        /* ----- SIDEBAR THEME DROPDOWN (fixed positioning) ----- */
+        /* ----- SIDEBAR THEME DROPDOWN ----- */
         .sidebar-theme-wrapper {
             position:relative;
             display:flex;
@@ -249,7 +246,6 @@
         }
         .header-left { display:flex; align-items:center; gap:12px; }
 
-        /* Static brain in header — no animation */
         .header-brain {
             font-size:36px;
             color:var(--accent);
@@ -320,6 +316,10 @@
             font-weight:400;
             line-height:1.5;
         }
+        .chat-input-wrap input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
         .chat-input-wrap input::placeholder {
             color:var(--text-muted);
             opacity:0.7;
@@ -332,7 +332,7 @@
             display:flex;
             flex-direction:column;
             gap:12px;
-            padding:10px 24px;  /* fixed: added horizontal padding to match composer */
+            padding:10px 24px;
             flex-grow:1;
             overflow-y:auto;
         }
@@ -367,12 +367,13 @@
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             border-bottom-left-radius: 4px;
+            width: 100%;
         }
 
-        /* ===== AVATAR: theme‑aware brain colors & smaller dimensions ===== */
+        /* ===== AVATAR: theme‑aware brain colors ===== */
         .chat-message .avatar {
-            width: 20px; /* Reduced from 32px */
-            height: 20px; /* Reduced from 32px */
+            width: 32px;
+            height: 32px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -384,21 +385,21 @@
         }
         .chat-message .avatar .mini-orbit {
             position: relative;
-            width: 20px; /* Reduced from 32px */
-            height: 20px; /* Reduced from 32px */
+            width: 32px;
+            height: 32px;
             transform-origin: center;
         }
         .chat-message .avatar .mini-orbit .half {
             position: absolute;
-            width: 20px; /* Reduced from 32px */
-            height: 20px; /* Reduced from 32px */
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .chat-message .avatar .mini-orbit .half i {
-            font-size: 18px;  /* Reduced from 30px */
-            color: var(--avatar-brain-color);  /* fixed: use variable */
+            font-size: 30px;
+            color: var(--avatar-brain-color);
             transition: color 0.3s;
         }
         .chat-message .avatar .mini-orbit .left {
@@ -412,8 +413,8 @@
             left: 50%;
             top: 50%;
             width: 2px;
-            height: 14px; /* Reduced from 24px */
-            background: var(--avatar-line-color);  /* fixed: use variable */
+            height: 24px;
+            background: var(--avatar-line-color);
             transform: translate(-50%, -50%) scaleY(0.5);
             border-radius: 2px;
             opacity: 0;
@@ -421,7 +422,7 @@
             transition: opacity 0.2s;
         }
 
-        /* TYPING ANIMATION for avatar — only when .typing class is present */
+        /* TYPING ANIMATION for avatar */
         .chat-message.typing .avatar .mini-orbit .left {
             animation: leftMove 1.6s ease-in-out infinite;
         }
@@ -437,15 +438,15 @@
 
         @keyframes leftMove {
             0%, 10% { transform: translateX(0); }
-            25%   { transform: translateX(-6px); } /* Reduced from -12px */
-            70%   { transform: translateX(-6px); }
+            25%   { transform: translateX(-12px); }
+            70%   { transform: translateX(-12px); }
             85%   { transform: translateX(0); }
             100%  { transform: translateX(0); }
         }
         @keyframes rightMove {
             0%, 10% { transform: translateX(0); }
-            25%   { transform: translateX(6px); } /* Reduced from 12px */
-            70%   { transform: translateX(6px); }
+            25%   { transform: translateX(12px); }
+            70%   { transform: translateX(12px); }
             85%   { transform: translateX(0); }
             100%  { transform: translateX(0); }
         }
@@ -480,7 +481,7 @@
         }
 
         /* ============================================================
-           TOOLBAR (No glow on dropdowns)
+           TOOLBAR
            ============================================================ */
         .card-toolbar {
             display:flex; align-items:center; justify-content:space-between; margin-top:8px;
@@ -497,10 +498,10 @@
         }
 
         /* ============================================================
-           MODEL + DROPDOWN (No glow / No animated border)
+           API SELECTOR + DROPDOWN (Compatible & Multi-Select Free)
            ============================================================ */
         .model-dropdown {
-            position:relative; display:inline-block; z-index:150;  /* fixed: increased z-index */
+            position:relative; display:inline-block; z-index:150;
         }
         .model-dropdown-trigger {
             display:flex; align-items:center; gap:6px;
@@ -510,7 +511,7 @@
             padding:6px 12px; font-size:13px; font-weight:600;
             color:var(--text-primary); cursor:pointer;
             transition:all 0.2s ease;
-            font-family:'Inter',sans-serif; min-width:100px;
+            font-family:'Inter',sans-serif; min-width:130px;
             box-shadow:0 2px 8px rgba(0,0,0,0.03);
         }
         .model-dropdown-trigger:hover {
@@ -523,16 +524,26 @@
         .model-dropdown-trigger.open .trigger-arrow { transform:rotate(180deg); }
 
         .model-dropdown-menu {
-            position:absolute; top:calc(100% + 6px); left:0; right:0; min-width:140px;
+            position:absolute; bottom:calc(100% + 6px); left:0; min-width:260px; max-height:350px;
             background:var(--dropdown-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
             border-radius:14px; border:1px solid var(--dropdown-border);
             box-shadow:0 16px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.05) inset;
-            padding:5px; opacity:0; transform:translateY(-8px) scale(0.96);
+            padding:5px; opacity:0; transform:translateY(8px) scale(0.96);
             pointer-events:none; transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-            transform-origin:top center; overflow:hidden;
-            z-index:200; /* fixed: increased */
+            transform-origin:bottom left; overflow-y:auto;
+            z-index:200;
         }
         .model-dropdown-menu.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+
+        .dropdown-group-header {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            padding: 8px 12px 4px 12px;
+            letter-spacing: 0.8px;
+            opacity: 0.8;
+        }
 
         .model-dropdown-item {
             display:flex; align-items:center; justify-content:space-between;
@@ -546,15 +557,10 @@
         .model-dropdown-item:hover { background:var(--badge-bg); }
         .model-dropdown-item.active { background:var(--badge-bg); border-left:3px solid var(--accent); border-radius:10px 4px 4px 10px; }
         .model-dropdown-item.active .item-label { font-weight:700; }
-        .model-dropdown-item[data-model="komana"] .item-label {
-            background:linear-gradient(135deg, var(--accent), #ff6b7a);
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-            font-weight:700;
-        }
 
-        /* ----- DROPDOWN (Max/High/Medium/Low/Complex) - No glow ----- */
+        /* ----- DROPDOWN (Quality Settings) ----- */
         .premium-dropdown {
-            position:relative; display:inline-block; z-index:150;  /* fixed: increased z-index */
+            position:relative; display:inline-block; z-index:150;
         }
         .premium-dropdown-trigger {
             display:flex; align-items:center; gap:6px;
@@ -577,14 +583,14 @@
         .premium-dropdown-trigger.open .trigger-arrow { transform:rotate(180deg); }
 
         .premium-dropdown-menu {
-            position:absolute; top:calc(100% + 6px); left:0; right:0; min-width:200px;
+            position:absolute; bottom:calc(100% + 6px); left:0; min-width:200px;
             background:var(--dropdown-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
             border-radius:14px; border:1px solid var(--dropdown-border);
             box-shadow:0 16px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.05) inset;
-            padding:5px; opacity:0; transform:translateY(-8px) scale(0.96);
+            padding:5px; opacity:0; transform:translateY(8px) scale(0.96);
             pointer-events:none; transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-            transform-origin:top center; overflow:hidden;
-            z-index:200; /* fixed: increased */
+            transform-origin:bottom center; overflow:hidden;
+            z-index:200;
         }
         .premium-dropdown-menu.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
 
@@ -612,7 +618,6 @@
         .premium-dropdown-item[data-value="Complex"] .item-label {
             font-weight:700; color:var(--accent); -webkit-text-fill-color:var(--accent); background:none;
         }
-        /* class for complex active state (replaces inline styles) */
         .premium-dropdown-item.complex-active {
             border-left:3px solid var(--accent);
             background:var(--badge-bg);
@@ -637,7 +642,7 @@
         .toggle-switch input:checked + .toggle-slider::before { transform:translateX(18px); }
         .toggle-switch:hover .toggle-slider { box-shadow:0 0 12px var(--glow-color); }
 
-        /* Send & Mic */
+        /* Send & STOP Button */
         .toolbar-send {
             color:#fff; background:var(--accent); width:34px; height:34px;
             border-radius:50%; display:flex; align-items:center; justify-content:center;
@@ -645,10 +650,16 @@
         }
         .toolbar-send:hover { background:var(--accent-hover); box-shadow:0 4px 16px var(--glow-color); transform:scale(1.06); }
         .toolbar-send:active { transform:scale(0.90); }
-        .toolbar-mic { color:var(--text-muted); font-size:16px; cursor:pointer; transition:all 0.2s; }
-        .toolbar-mic:hover { color:var(--accent); transform:scale(1.1); }
 
-        /* Action Chips — fixed missing variables */
+        .toolbar-send.stop-active {
+            background: #dc2626 !important;
+        }
+        .toolbar-send.stop-active:hover {
+            background: #b91c1c !important;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4) !important;
+        }
+
+        /* Action Chips */
         .action-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:14px; flex-shrink:0; }
         .chip {
             display:flex; align-items:center; gap:10px; padding:10px 22px; height:46px;
@@ -699,7 +710,7 @@
             transform:translateY(-2px) scale(1.02);
         }
 
-        /* Toast — now uses variable */
+        /* Toast */
         .mototus-toast {
             position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(10px);
             background:var(--toast-bg);
@@ -713,175 +724,496 @@
         .mototus-toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 
         /* ============================================================
-           MOTOTUS SMART API SETTINGS MODAL (ADDITIVE)
+           NEW DESIGN: CODE BLOCKS, PC MONITOR STAND & TABS
            ============================================================ */
-        .mototus-api-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        .inline-code {
+            background: var(--badge-bg);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        /* Code Block Styling */
+        .code-block-container {
+            background: #0d0e15;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 12px 0;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-align: left;
+            position: relative;
+        }
+        .code-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #161822;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .code-block-lang {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.8px;
+        }
+
+        /* Tabs for Toggle Code/Monitor Screen */
+        .code-block-tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 2px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .code-block-tabs .tab-btn {
+            background: transparent;
+            border: none;
+            color: #8a8d9a;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
+            gap: 4px;
+        }
+        .code-block-tabs .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .code-block-tabs .tab-btn.active {
+            color: #fff;
+            background: var(--accent);
+        }
+
+        .code-block-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .code-block-btn {
+            background: transparent;
+            border: none;
+            color: #a8a8b8;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .code-block-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .code-block-body {
+            margin: 0;
+            padding: 14px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e3e6ed;
+            background: #090a0f;
+        }
+        .code-block-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace !important;
+            white-space: pre-wrap;
+        }
+
+        /* Syntax Highlighter Classes */
+        .syn-keyword { color: #B084FF !important; font-weight: 700; }
+        .syn-string { color: #52E552 !important; }
+        .syn-number { color: #FF9933 !important; }
+        .syn-comment { color: #888888 !important; font-style: italic; }
+        .syn-func { color: #00FFFF !important; }
+        .syn-op { color: #FFFF00 !important; }
+        .syn-tag { color: #FF6B6B !important; }
+        .syn-attr { color: #87CEEB !important; }
+
+        /* AI Error Checker Loading Overlay */
+        .code-block-loader {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 14, 21, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
             justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 10;
+            border-radius: 12px;
         }
-        [data-theme="dark"] .mototus-api-modal {
-            background: rgba(10, 10, 18, 0.65);
+
+        /* realistic PC Monitor Frame and Output screen */
+        .pc-monitor-wrapper {
+            background: #111116;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .mototus-api-modal.open {
-            opacity: 1;
-            pointer-events: all;
+        .pc-monitor-frame {
+            background: #1e1e24;
+            border: 10px solid #2d2d38;
+            border-radius: 12px 12px 0 0;
+            box-shadow: inset 0 0 10px #000, 0 8px 16px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 16/10;
+            width: 100%;
+            overflow: hidden;
         }
-        .mototus-api-card {
+        .pc-monitor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #13131a;
+            padding: 6px 12px;
+            font-size: 11px;
+            color: #8a8d9a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            user-select: none;
+        }
+        .pc-monitor-title {
+            font-weight: 800;
+            color: #00ffff;
+            text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pc-monitor-title i {
+            font-size: 8px;
+            animation: blink 1s step-end infinite;
+        }
+        .pc-monitor-clear-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .pc-monitor-clear-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+        .pc-monitor-screen {
+            background: #040406;
+            flex: 1;
+            position: relative;
+            overflow: auto;
+            color: #e3e6ed;
+            font-family: monospace;
+            padding: 14px;
+        }
+        .pc-monitor-stand {
+            width: 70px;
+            height: 25px;
+            background: #25252e;
+            margin: 0 auto;
+            border-top: 2px solid #3d3d4b;
+        }
+        .pc-monitor-base {
+            width: 150px;
+            height: 8px;
+            background: #1e1e24;
+            border-radius: 4px 4px 0 0;
+            margin: 0 auto 10px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            border-bottom: 3px solid #13131a;
+        }
+
+        /* Parallel Multi-Response UI Container */
+        .multi-response-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            margin-top: 6px;
+        }
+        .multi-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            width: 440px;
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeInMsg 0.3s ease;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .multi-card.fastest {
+            border-color: #ffd700 !important;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+        }
+        .multi-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+        .multi-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .multi-card-status {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .multi-card-status.speed-badge {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .multi-card-body {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        /* ============================================================
+           NEW DESIGN: INTERNET SEARCH & SEARCH KEYS MANAGEMENT
+           ============================================================ */
+        .settings-add-key-btn {
+            background: var(--badge-bg);
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .settings-add-key-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .search-keys-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .search-key-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInMsg 0.2s ease;
+        }
+        .search-key-row input {
+            flex: 1;
+            background: var(--select-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            outline: none;
+            font-family: inherit;
+        }
+        .search-key-remove-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .search-key-remove-btn:hover {
+            color: #ef4444;
+        }
+
+        /* ============================================================
+           CRITICAL ISSUE 1: COMPLETE SETTINGS MODAL SYSTEM CSS (THEME-AWARE)
+           ============================================================ */
+        .settings-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            display: none; /* Controlled dynamically by .open class */
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .settings-modal.open {
+            display: flex;
+            opacity: 1;
+        }
+        .settings-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 550px;
             max-width: 90%;
             box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            transform: scale(0.92) translateY(12px);
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
         }
-        .mototus-api-modal.open .mototus-api-card {
-            transform: scale(1) translateY(0);
+        .settings-modal.open .settings-modal-content {
+            transform: scale(1);
         }
-        .mototus-api-header {
+        .settings-modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border-color);
         }
-        .mototus-api-header h3 {
-            font-size: 17px;
+        .settings-modal-header h3 {
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
-            margin: 0;
         }
-        .mototus-api-header h3 i {
-            color: var(--accent);
-        }
-        .mototus-api-close {
+        .settings-modal-close {
             font-size: 22px;
+            font-weight: 700;
             color: var(--text-muted);
             cursor: pointer;
-            transition: color 0.2s, transform 0.2s;
-            line-height: 1;
+            transition: color 0.2s;
         }
-        .mototus-api-close:hover {
+        .settings-modal-close:hover {
             color: var(--accent);
-            transform: scale(1.1);
         }
-        .mototus-api-body {
-            padding: 24px;
+        .settings-modal-body {
+            padding: 20px;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+        .settings-tab-nav {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            gap: 4px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            overflow-x: auto;
         }
-        .mototus-api-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .mototus-api-field label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-        .mototus-api-input-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .mototus-api-input {
-            width: 100%;
-            padding: 11px 14px;
-            font-size: 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background: var(--select-bg);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .mototus-api-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--glow-color);
-        }
-        .mototus-api-vis-toggle {
-            position: absolute;
-            right: 14px;
+        .settings-tab-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .mototus-api-vis-toggle:hover {
-            color: var(--accent);
-        }
-        .mototus-api-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .mototus-api-btn {
-            padding: 10px 18px;
-            font-size: 13px;
+            padding: 6px 12px;
+            font-size: 12px;
             font-weight: 600;
-            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-            font-family: 'Inter', sans-serif;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-family: inherit;
         }
-        .mototus-api-btn-primary {
+        .settings-tab-btn:hover {
+            color: var(--accent);
+            background: var(--badge-bg);
+        }
+        .settings-tab-btn.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            background: var(--badge-bg);
+        }
+        .settings-tab-content {
+            display: none; /* Hidden when not active */
+        }
+        .settings-tab-content.active {
+            display: flex; /* Active panel shown as flex layout */
+            flex-direction: column;
+            gap: 12px;
+        }
+        .settings-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .settings-input-group.row {
+            flex-direction: row;
+            gap: 12px;
+        }
+        .settings-input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .settings-input-group input[type="text"],
+        .settings-input-group input[type="password"],
+        .settings-input-group textarea {
+            background: var(--select-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+        .settings-input-group input:focus,
+        .settings-input-group textarea:focus {
+            border-color: var(--accent);
+        }
+        .settings-modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+        .settings-save-btn {
             background: var(--accent);
             color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
         }
-        .mototus-api-btn-primary:hover {
+        .settings-save-btn:hover {
             background: var(--accent-hover);
             box-shadow: 0 4px 12px var(--glow-color);
         }
-        .mototus-api-btn-secondary {
-            background: var(--select-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-        .mototus-api-btn-secondary:hover {
-            background: var(--badge-bg);
-            border-color: var(--accent);
-        }
-        .mototus-api-btn-danger {
-            background: rgba(230, 57, 70, 0.08);
-            color: var(--accent);
-            border: 1px solid rgba(230, 57, 70, 0.15);
-        }
-        .mototus-api-btn-danger:hover {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-        }
 
-        /* Responsive */
+        /* Responsive UI Adjustments */
         @media (max-width:720px) {
             .greeting { font-size:18px; }
             .composer-card { padding:16px; }
@@ -904,58 +1236,19 @@
             .header-brain { font-size:30px; width:38px; height:38px; }
             .header-brain i { font-size:30px; }
         }
-        @media (max-width:480px) {
-            .header { padding:0 12px; }
-            .greeting { font-size:15px; }
-            .composer-card { padding:12px; }
-            .chip { padding:6px 12px; height:34px; font-size:11px; gap:6px; }
-            .chip i { font-size:12px; }
-            .premium-dropdown-trigger, .model-dropdown-trigger { padding:4px 8px; font-size:11px; min-width:60px; }
-            .premium-dropdown-menu, .model-dropdown-menu { min-width:150px; }
-            .premium-dropdown-item, .model-dropdown-item { padding:6px 10px; font-size:11px; }
-            .mototus-toast { font-size:11px; padding:8px 16px; }
-            .sidebar-icon.settings-icon { width:36px; height:36px; }
-            .sidebar-icon.settings-icon svg { width:20px; height:20px; }
-            .toolbar-right { gap:3px; }
-            .toggle-switch { width:30px; height:18px; }
-            .toggle-slider::before { height:12px; width:12px; left:3px; bottom:3px; }
-            .toggle-switch input:checked + .toggle-slider::before { transform:translateX(12px); }
-            .model-dropdown-trigger { min-width:60px; }
-            .sidebar-theme-menu { left:48px; min-width:100px; }
-            .sidebar-theme-item { padding:4px 10px; font-size:11px; }
-            .header-brain { font-size:26px; width:34px; height:34px; }
-            .header-brain i { font-size:26px; }
-            .mototus-api-card {
-                width: 95%;
-            }
-            .mototus-api-body {
-                padding: 18px;
-                gap: 14px;
-            }
-            .mototus-api-actions {
-                flex-direction: column-reverse;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .mototus-api-btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
     </style>
 </head>
 <body>
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-        <!-- New Chat trigger relocated to sidebar top plus icon -->
-        <div class="sidebar-icon" id="sidebarNewChatBtn" title="New conversation"><i class="fa-regular fa-plus"></i></div>
+        <div class="sidebar-icon" id="sidebarNewChat" title="New conversation"><i class="fa-regular fa-plus"></i></div>
         <div class="sidebar-icon" title="Conversations"><i class="fa-regular fa-comments"></i></div>
         <div class="sidebar-icon" title="Trash"><i class="fa-regular fa-trash-can"></i></div>
         <div class="sidebar-icon" title="Share"><i class="fa-regular fa-share-from-square"></i></div>
         <div class="sidebar-icon code-icon" title="Code"><i class="fa-solid fa-code"></i></div>
 
-        <!-- Theme switcher in sidebar -->
+        <!-- Theme Switcher in Sidebar -->
         <div class="sidebar-theme-wrapper" id="sidebarThemeWrapper">
             <button class="sidebar-theme-trigger" id="sidebarThemeTrigger" title="Change theme">
                 <i class="fa-regular fa-sun theme-icon" id="sidebarThemeIcon"></i>
@@ -978,10 +1271,10 @@
 
         <div class="sidebar-spacer"></div>
 
-        <!-- Settings SVG -->
-        <div class="sidebar-icon settings-icon" title="Settings">
+        <!-- Settings Icon Trigger -->
+        <div class="sidebar-icon settings-icon" id="sidebarSettings" title="Settings">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-                <path d="M 15 2 C 14.448 2 14 2.448 14 3 L 14 3.171875 C 14 3.649875 13.663406 4.0763437 13.191406 4.1523438 C 12.962406 4.1893437 12.735719 4.2322031 12.511719 4.2832031 C 12.047719 4.3892031 11.578484 4.1265 11.396484 3.6875 L 11.330078 3.53125 C 11.119078 3.02125 10.534437 2.7782344 10.023438 2.9902344 C 9.5134375 3.2012344 9.2704219 3.785875 9.4824219 4.296875 L 9.5488281 4.4570312 C 9.7328281 4.8970313 9.5856875 5.4179219 9.1796875 5.6699219 C 8.9836875 5.7919219 8.7924688 5.9197344 8.6054688 6.0527344 C 8.2174688 6.3297344 7.68075 6.2666875 7.34375 5.9296875 L 7.2226562 5.8085938 C 6.8316562 5.4175937 6.1985937 5.4175938 5.8085938 5.8085938 C 5.4185938 6.1995938 5.4185938 6.8326563 5.8085938 7.2226562 L 5.9296875 7.34375 C 6.2666875 7.68075 6.3297344 8.2164688 6.0527344 8.6054688 C 5.9197344 8.7924687 5.7919219 8.9836875 5.6699219 9.1796875 C 5.4179219 9.5856875 4.8960781 9.7337812 4.4550781 9.5507812 L 4.296875 9.484375 C 3.786875 9.273375 3.2002813 9.5153906 2.9882812 10.025391 C 2.7772813 10.535391 3.0192969 11.120031 3.5292969 11.332031 L 3.6855469 11.396484 C 4.1245469 11.578484 4.3892031 12.047719 4.2832031 12.511719 C 4.2322031 12.735719 4.1873906 12.962406 4.1503906 13.191406 C 4.0753906 13.662406 3.649875 14 3.171875 14 L 3 14 C 2.448 14 2 14.448 2 15 C 2 15.552 2.448 16 3 16 L 3.171875 16 C 3.649875 16 4.0763437 16.336594 4.1523438 16.808594 C 4.1893437 17.037594 4.2322031 17.264281 4.2832031 17.488281 C 4.3892031 17.952281 4.1265 18.421516 3.6875 18.603516 L 3.53125 18.669922 C 3.02125 18.880922 2.7782344 19.465563 2.9902344 19.976562 C 3.2012344 20.486563 3.785875 20.729578 4.296875 20.517578 L 4.4570312 20.451172 C 4.8980312 20.268172 5.418875 20.415312 5.671875 20.820312 C 5.793875 21.016313 5.9206875 21.208484 6.0546875 21.396484 C 6.3316875 21.784484 6.2686406 22.321203 5.9316406 22.658203 L 5.8085938 22.779297 C 5.4175937 23.170297 5.4175938 23.803359 5.8085938 24.193359 C 6.1995938 24.583359 6.8326562 24.584359 7.2226562 24.193359 L 7.3457031 24.072266 C 7.6827031 23.735266 8.2174688 23.670266 8.6054688 23.947266 C 8.7934688 24.081266 8.9856406 24.210031 9.1816406 24.332031 C 9.5866406 24.584031 9.7357344 25.105875 9.5527344 25.546875 L 9.4863281 25.705078 C 9.2753281 26.215078 9.5173438 26.801672 10.027344 27.013672 C 10.537344 27.224672 11.121984 26.982656 11.333984 26.472656 L 11.398438 26.316406 C 11.580438 25.877406 12.049672 25.61275 12.513672 25.71875 C 12.737672 25.76975 12.964359 25.814562 13.193359 25.851562 C 13.662359 25.924562 14 26.350125 14 26.828125 L 14 27 C 14 27.552 14.448 28 15 28 C 15.552 28 16 27.552 16 27 L 16 26.828125 C 16 26.350125 16.336594 25.923656 16.808594 25.847656 C 17.037594 25.810656 17.264281 25.767797 17.488281 25.716797 C 17.952281 25.610797 18.421516 25.8735 18.603516 26.3125 L 18.669922 26.46875 C 18.880922 26.97875 19.465563 27.221766 19.976562 27.009766 C 20.486563 26.798766 20.729578 26.214125 20.517578 25.703125 L 20.451172 25.542969 C 20.268172 25.101969 20.415312 24.581125 20.820312 24.328125 C 21.016313 24.206125 21.208484 24.079312 21.396484 23.945312 C 21.784484 23.668312 22.321203 23.731359 22.658203 24.068359 L 22.779297 24.191406 C 23.170297 24.582406 23.803359 24.582406 24.193359 24.191406 C 24.583359 23.800406 24.584359 23.167344 24.193359 22.777344 L 24.072266 22.654297 C 23.735266 22.317297 23.670266 21.782531 23.947266 21.394531 C 24.081266 21.206531 24.210031 21.014359 24.332031 20.818359 C 24.584031 20.413359 25.105875 20.264266 25.546875 20.447266 L 25.705078 20.513672 C 26.215078 20.724672 26.801672 20.482656 27.013672 19.972656 C 27.224672 19.462656 26.982656 18.878016 26.472656 18.666016 L 26.316406 18.601562 C 25.877406 18.419563 25.61275 17.950328 25.71875 17.486328 C 25.76975 17.262328 25.814562 17.035641 25.851562 16.806641 C 25.924562 16.337641 26.350125 16 26.828125 16 L 27 16 C 27.552 16 28 15.552 28 15 C 28 14.448 27.552 14 27 14 L 26.828125 14 C 26.350125 14 25.923656 13.663406 25.847656 13.191406 C 25.810656 12.962406 25.767797 12.735719 25.716797 12.511719 C 25.610797 12.047719 25.8735 11.578484 26.3125 11.396484 L 26.46875 11.330078 C 26.97875 11.119078 27.221766 10.534437 27.009766 10.023438 C 26.798766 9.5134375 26.214125 9.2704219 25.703125 9.4824219 L 25.542969 9.5488281 C 25.101969 9.7318281 24.581125 9.5846875 24.328125 9.1796875 C 24.206125 8.9836875 24.079312 8.7915156 23.945312 8.6035156 C 23.668312 8.2155156 23.731359 7.6787969 24.068359 7.3417969 L 24.191406 7.2207031 C 24.582406 6.8297031 24.582406 6.1966406 24.191406 5.8066406 C 23.800406 5.4156406 23.167344 5.4156406 22.777344 5.8066406 L 22.65625 5.9296875 C 22.31925 6.2666875 21.782531 6.3316875 21.394531 6.0546875 C 21.206531 5.9206875 21.014359 5.7919219 20.818359 5.6699219 C 20.413359 5.4179219 20.266219 4.8960781 20.449219 4.4550781 L 20.515625 4.296875 C 20.726625 3.786875 20.484609 3.2002812 19.974609 2.9882812 C 19.464609 2.7772813 18.879969 3.0192969 18.667969 3.5292969 L 18.601562 3.6855469 C 18.419563 4.1245469 17.950328 4.3892031 17.486328 4.2832031 C 17.262328 4.2322031 17.035641 4.1873906 16.806641 4.1503906 C 16.336641 4.0753906 16 3.649875 16 3.171875 L 16 3 C 16 2.448 15.552 2 15 2 z M 15 7 C 19.078645 7 22.438586 10.054876 22.931641 14 L 16.728516 14 A 2 2 0 0 0 15 13 A 2 2 0 0 0 14.998047 13 L 11.896484 7.625 C 12.850999 7.222729 13.899211 7 15 7 z M 10.169922 8.6328125 L 13.269531 14 A 2 2 0 0 0 13 15 A 2 2 0 0 0 13.269531 15.996094 L 10.167969 21.365234 C 8.2464258 19.903996 7 17.600071 7 15 C 7 12.398945 8.2471371 10.093961 10.169922 8.6328125 z M 16.730469 16 L 22.931641 16 C 22.438586 19.945124 19.078645 23 15 23 C 13.899211 23 12.850999 22.777271 11.896484 22.375 L 14.998047 17 A 2 2 0 0 0 15 17 A 2 2 0 0 0 16.730469 16 z"></path>
+                <path d="M 15 2 C 14.448 2 14 2.448 14 3 L 14 3.171875 C 14 3.649875 13.663406 4.0763437 13.191406 4.1523438 C 12.962406 4.1893437 12.735719 4.2322031 12.511719 4.2832031 C 12.047719 4.3892031 11.578484 4.1265 11.396484 3.6875 L 11.330078 3.53125 C 11.119078 3.02125 10.534437 2.7782344 10.023438 2.9902344 C 9.5134375 3.2012344 9.2704219 3.785875 9.4824219 4.296875 L 9.5488281 4.4570312 C 9.7328281 4.8970313 9.5856875 5.4179219 9.1796875 5.6699219 C 8.9836875 5.7919219 8.7924688 5.9197344 8.6054688 6.0527344 C 8.2174688 6.3297344 7.68075 6.2666875 7.34375 5.9296875 L 7.2226562 5.8085938 C 6.8316562 5.4175937 6.1985937 5.4175938 5.8085938 5.8085938 C 5.4185938 6.1995938 5.4185938 6.8326563 5.8085938 7.2226562 L 5.9296875 7.34375 C 6.2666875 7.68075 6.3297344 8.2164688 6.0527344 8.6054688 C 5.9197344 8.7924687 5.7919219 8.9836875 5.6699219 9.1796875 C 5.4179219 9.5856875 4.8960781 9.7337812 4.4550781 9.5507812 L 4.296875 9.484375 C 3.786875 9.273375 3.2002813 9.5153906 2.9882812 10.025391 C 2.7772813 10.535391 3.0192969 11.120031 3.5292969 11.332031 L 3.6855469 11.396484 C 4.1245469 11.578484 4.3892031 12.511719 4.2832031 12.511719 C 4.2322031 12.735719 4.1873906 12.962406 4.1503906 13.191406 C 4.0753906 13.662406 3.649875 14 3.171875 14 L 3 14 C 2.448 14 2 14.448 2 15 C 2 15.552 2.448 16 3 16 L 3.171875 16 C 3.649875 16 4.0763437 16.336594 4.1523438 16.808594 C 4.1893437 17.037594 4.2322031 17.264281 4.2832031 17.488281 C 4.3892031 17.952281 4.1265 18.421516 3.6875 18.603516 L 3.53125 18.669922 C 3.02125 18.880922 2.7782344 19.465563 2.9902344 19.976562 C 3.2012344 20.486563 3.785875 20.729578 4.296875 20.517578 L 4.4570312 20.451172 C 4.8980312 20.268172 5.418875 20.415312 5.671875 20.820312 C 5.793875 21.016313 5.9206875 21.208484 6.0546875 21.396484 C 6.3316875 21.784484 6.2686406 22.321203 5.9316406 22.658203 L 5.8085938 22.779297 C 5.4175937 23.170297 5.4175938 23.803359 5.8085938 24.193359 C 6.1995938 24.583359 6.8326562 24.584359 7.2226562 24.193359 L 7.3457031 24.072266 C 7.6827031 23.735266 8.2174688 23.670266 8.6054688 23.947266 C 8.7934688 24.081266 8.9856406 24.210031 9.1816406 24.332031 C 9.5866406 24.584031 9.7357344 25.105875 9.5527344 25.546875 L 9.4863281 25.705078 C 9.2753281 26.215078 9.5173438 26.801672 10.027344 27.013672 C 10.537344 27.224672 11.121984 26.472656 11.333984 26.472656 L 11.398438 26.316406 C 11.580438 25.877406 12.049672 25.61275 12.513672 25.71875 C 12.737672 25.76975 12.964359 25.814562 13.193359 25.851562 C 13.662359 25.924562 14 26.350125 14 26.828125 L 14 27 C 14 27.552 14.448 28 15 28 C 15.552 28 16 27.552 16 27 L 16 26.828125 C 16 26.350125 16.336594 25.923656 16.808594 25.847656 C 17.037594 25.810656 17.264281 25.767797 17.488281 25.716797 C 17.952281 25.610797 18.421516 25.8735 18.603516 26.3125 L 18.669922 26.46875 C 18.880922 26.46875 19.465563 27.221766 19.976562 27.009766 C 20.486563 26.798766 20.729578 26.214125 20.517578 25.703125 L 20.451172 25.542969 C 20.268172 25.101969 20.415312 24.581125 20.820312 24.328125 C 21.016313 24.206125 21.208484 24.079312 21.396484 23.945312 C 21.784484 23.668312 22.321203 24.068359 22.658203 24.068359 L 22.779297 24.191406 C 23.170297 24.582406 23.803359 24.582406 24.193359 24.191406 C 24.583359 23.800406 24.584359 23.167344 24.193359 22.777344 L 24.072266 22.654297 C 23.735266 22.317297 23.670266 21.782531 23.947266 21.394531 C 24.081266 21.206531 24.210031 21.014359 24.332031 20.818359 C 24.584031 20.413359 25.105875 20.264266 25.546875 20.447266 L 25.705078 20.513672 C 26.215078 20.724672 26.801672 20.482656 27.013672 19.972656 C 27.224672 19.462656 26.982656 18.878016 26.472656 18.666016 L 26.316406 18.601562 C 25.877406 18.419563 25.61275 17.950328 25.71875 17.486328 C 25.76975 17.262328 25.814562 17.035641 25.851562 16.806641 C 25.924562 16.337641 26.350125 16 26.828125 16 L 27 16 C 27.552 16 28 15.552 28 15 C 28 14.448 27.552 14 27 14 L 26.828125 14 C 26.350125 14 25.923656 13.191406 25.847656 13.191406 C 25.810656 12.962406 25.767797 12.511719 25.716797 12.511719 C 25.610797 12.047719 25.8735 11.578484 26.3125 11.396484 L 26.46875 11.330078 C 26.97875 11.119078 27.221766 10.534437 27.009766 10.023438 C 26.798766 9.5134375 26.214125 9.2704219 25.703125 9.4824219 L 25.542969 9.5488281 C 25.101969 9.7318281 24.581125 9.5846875 24.328125 9.1796875 C 24.206125 8.9836875 24.079312 8.7915156 23.945312 8.6035156 C 23.668312 8.2155156 23.731359 7.6787969 24.068359 7.3417969 L 24.191406 7.2207031 C 24.582406 6.8297031 24.582406 6.1966406 24.191406 5.8066406 C 23.800406 5.4156406 23.167344 5.4156406 22.777344 5.8066406 L 22.65625 5.9296875 C 22.31925 6.2666875 21.782531 6.3316875 21.394531 6.0546875 C 21.206531 5.9206875 21.014359 5.6699219 20.818359 5.6699219 C 20.413359 5.4179219 20.266219 4.8960781 20.449219 4.4550781 L 20.515625 4.296875 C 20.726625 3.786875 20.484609 3.2002812 19.974609 2.9882812 C 19.464609 2.7772813 18.879969 3.0192969 18.667969 3.5292969 L 18.601562 3.6855469 C 18.419563 4.1245469 17.950328 4.3892031 17.486328 4.2832031 C 17.262328 4.2322031 17.035641 4.1873906 16.806641 4.1503906 C 16.336641 4.0753906 16 3.649875 16 3.171875 L 16 3 C 16 2.448 15.552 2 15 2 z M 15 7 C 19.078645 7 22.438586 10.054876 22.931641 14 L 16.728516 14 A 2 2 0 0 0 15 13 A 2 2 0 0 0 14.998047 13 L 11.896484 7.625 C 12.850999 7.222729 13.899211 7 15 7 z M 10.169922 8.6328125 L 13.269531 14 A 2 2 0 0 0 13 15 A 2 2 0 0 0 13.269531 15.996094 L 10.167969 21.365234 C 8.2464258 19.903996 7 17.600071 7 15 C 7 12.398945 8.2471371 10.093961 10.169922 8.6328125 z M 16.730469 16 L 22.931641 16 C 22.438586 19.945124 19.078645 23 15 23 C 13.899211 23 12.850999 22.777271 11.896484 22.375 L 14.998047 17 A 2 2 0 0 0 15 17 A 2 2 0 0 0 16.730469 16 z"></path>
             </svg>
         </div>
         <div class="sidebar-icon download-icon" title="Downloads"><i class="fa-regular fa-circle-down"></i></div>
@@ -1006,7 +1299,7 @@
         <div class="chat-messages" id="chatMessages"></div>
 
         <div class="composer-card">
-            <!-- Chat Input Area (No messages inside here anymore) -->
+            <!-- Chat Input Area -->
             <div class="chat-area">
                 <div class="chat-input-wrap">
                     <input type="text" id="userInput" placeholder="What do you want to figure out today?" autofocus />
@@ -1017,36 +1310,42 @@
             <!-- Toolbar -->
             <div class="card-toolbar">
                 <div class="toolbar-left">
-                    <!-- Changed + inside composer card to document transfer upload trigger -->
-                    <div class="large-plus" id="docUploadBtn" title="Upload document"><i class="fa-regular fa-plus"></i></div>
-                    <input type="file" id="docFileInput" style="display: none;" />
+                    <div class="large-plus" id="newChatBtn" title="Start a fresh chat"><i class="fa-regular fa-plus"></i></div>
                 </div>
                 <div class="toolbar-right">
-                    <!-- Model Dropdown -->
-                    <div class="model-dropdown" id="modelDropdown">
-                        <div class="model-dropdown-trigger" id="modelDropdownTrigger">
+                    <!-- API Selection Dropdown -->
+                    <div class="model-dropdown" id="apiDropdown">
+                        <div class="model-dropdown-trigger" id="apiDropdownTrigger">
                             <span class="trigger-text">
-                                <span id="modelSelectedLabel">KOMANA</span>
+                                <span id="apiSelectedLabel">Groq AI</span>
                             </span>
                             <span class="trigger-arrow"><i class="fa-solid fa-chevron-down"></i></span>
                         </div>
-                        <div class="model-dropdown-menu" id="modelDropdownMenu">
-                            <div class="model-dropdown-item active" data-model="komana">
-                                <span class="item-label">KOMANA</span>
+                        <div class="model-dropdown-menu" id="apiDropdownMenu">
+                            <div class="model-dropdown-item active" data-provider="groq">
+                                <span class="item-label">Groq AI</span>
                                 <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
                             </div>
-                            <div class="model-dropdown-item" data-model="tokla">
-                                <span class="item-label">TOKLA 3.0</span>
+                            <div class="model-dropdown-item" data-provider="gemini">
+                                <span class="item-label">Google Gemini</span>
                                 <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
                             </div>
-                            <div class="model-dropdown-item" data-model="tusto">
-                                <span class="item-label">TUSTO 9.0</span>
+                            <div class="model-dropdown-item" data-provider="mistral">
+                                <span class="item-label">Mistral AI</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="model-dropdown-item" data-provider="cerebras">
+                                <span class="item-label">Cerebras AI</span>
+                                <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="model-dropdown-item" data-provider="cloudflare">
+                                <span class="item-label">Cloudflare AI</span>
                                 <span class="item-check"><i class="fa-solid fa-circle-check"></i></span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quality Dropdown -->
+                    <!-- Quality/Mode Settings Dropdown -->
                     <div class="premium-dropdown" id="premiumDropdown">
                         <div class="premium-dropdown-trigger" id="dropdownTrigger">
                             <span class="trigger-text">
@@ -1081,11 +1380,9 @@
                         </div>
                     </div>
 
+                    <!-- Send button acts as Stop Button dynamically -->
                     <span class="toolbar-send" id="sendBtn" title="Send">
                         <i class="fa-regular fa-paper-plane"></i>
-                    </span>
-                    <span class="toolbar-mic" title="Voice input">
-                        <i class="fa-regular fa-microphone"></i>
                     </span>
                 </div>
             </div>
@@ -1093,7 +1390,7 @@
 
         <!-- Action Chips -->
         <div class="action-chips" id="actionChips">
-            <div class="chip active" data-chip="write">
+            <div class="chip" data-chip="write">
                 <i class="fa-solid fa-feather-pointed"></i>
                 <span class="chip-label">Write</span>
             </div>
@@ -1112,12 +1409,130 @@
         </div>
     </main>
 
+    <!-- GLASSMORPHISM DASHBOARD SETTINGS MODAL -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-modal-content">
+            <div class="settings-modal-header">
+                <h3><i class="fa-solid fa-gears"></i> Dashboard Configurations</h3>
+                <span class="settings-modal-close" id="settingsCloseBtn">&times;</span>
+            </div>
+            <div class="settings-modal-body">
+                <div class="settings-tab-nav">
+                    <button class="settings-tab-btn active" data-tab="api-keys">🔑 API Keys</button>
+                    <button class="settings-tab-btn" data-tab="search-apis">🔍 Search APIs</button>
+                    <button class="settings-tab-btn" data-tab="prompt-templates">📝 Custom Templates</button>
+                </div>
+                
+                <!-- Tab 1: API Keys -->
+                <div class="settings-tab-content active" id="tab-api-keys">
+                    <div class="settings-input-group">
+                        <label>Groq API Key</label>
+                        <input type="password" id="key-groq" placeholder="gsk_..." />
+                    </div>
+                    <div class="settings-input-group">
+                        <label>Google Gemini API Key</label>
+                        <input type="password" id="key-gemini" placeholder="AIzaSy..." />
+                    </div>
+                    <div class="settings-input-group">
+                        <label>Mistral API Key</label>
+                        <input type="password" id="key-mistral" placeholder="Mistral API Token..." />
+                    </div>
+                    <div class="settings-input-group">
+                        <label>Cerebras (Carebrass) API Key</label>
+                        <input type="password" id="key-cerebras" placeholder="csk_..." />
+                    </div>
+                    <div class="settings-input-group row">
+                        <div style="flex:1;">
+                            <label>Cloudflare Account ID</label>
+                            <input type="text" id="cf-account-id" placeholder="Account ID..." />
+                        </div>
+                        <div style="flex:1;">
+                            <label>Cloudflare API Token</label>
+                            <input type="password" id="key-cloudflare" placeholder="API Token..." />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Search APIs (DYNAMIC MULTI-KEY SUPPORT) -->
+                <div class="settings-tab-content" id="tab-search-apis">
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+                        ইন্টারনেট সার্চ সচল করতে Serpapi অথবা Tavily API কী যোগ করুন। একাধিক কী যোগ করা সম্ভব। কোনো কী ফেইল করলে তা অটোমেটিক পরবর্তী কী-তে ফলব্যাক করবে।
+                    </p>
+                    
+                    <!-- Serpapi Configuration Section -->
+                    <div style="margin-bottom: 16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                            <label style="font-weight:700; font-size:13px; color: var(--text-primary);">Serpapi Keys (Google Search)</label>
+                            <button class="settings-add-key-btn" onclick="window.addNewSearchKeyField('serpapi')">
+                                <i class="fa-solid fa-plus"></i> Add Key
+                            </button>
+                        </div>
+                        <div id="serpapi-keys-container" class="search-keys-list">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                    
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 12px 0;" />
+                    
+                    <!-- Tavily Configuration Section -->
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                            <label style="font-weight:700; font-size:13px; color: var(--text-primary);">Tavily Keys (AI Web Search)</label>
+                            <button class="settings-add-key-btn" onclick="window.addNewSearchKeyField('tavily')">
+                                <i class="fa-solid fa-plus"></i> Add Key
+                            </button>
+                        </div>
+                        <div id="tavily-keys-container" class="search-keys-list">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Prompt Templates -->
+                <div class="settings-tab-content" id="tab-prompt-templates">
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+                        চিপসগুলোতে ক্লিক করলে নিচের কাস্টম প্রম্পটগুলো আপনার ইনপুট বক্সে লোড হবে।
+                    </p>
+                    <div class="settings-input-group">
+                        <label>✍️ Write Prompt Template</label>
+                        <textarea id="prompt-write" rows="2"></textarea>
+                    </div>
+                    <div class="settings-input-group">
+                        <label>📚 Learn Prompt Template</label>
+                        <textarea id="prompt-learn" rows="2"></textarea>
+                    </div>
+                    <div class="settings-input-group">
+                        <label>💻 Code Prompt Template</label>
+                        <textarea id="prompt-code" rows="2"></textarea>
+                    </div>
+                    <div class="settings-input-group">
+                        <label>👑 Life Stuff Prompt Template</label>
+                        <textarea id="prompt-life" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-modal-footer">
+                <button class="settings-save-btn" id="settingsSaveBtn">Save & Apply Changes</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ============================================================
-    JAVASCRIPT (fixed race condition, inline styles, etc.)
+    JAVASCRIPT (Full Core Logic + APIs + Safe Code Runner + HTML Typewriter)
     ============================================================ -->
     <script>
         (function() {
             'use strict';
+
+            // ---------- CRITICAL VARIABLE DECLARATIONS (RESOLVED) ----------
+            let conversationHistory = [];
+            let activeControllers = [];
+            let isTyping = false;
+            let stopRequested = false;
+            const userInput = document.getElementById('userInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const sendBtn = document.getElementById('sendBtn');
+            let typewriterTimeout = null;
 
             // ---------- THEME SYSTEM ----------
             const themes = ['light', 'dark', 'blue'];
@@ -1148,6 +1563,7 @@
 
             setTheme(currentIndex);
 
+            // Theme toggle hotkeys (Ctrl + Shift + Y)
             document.addEventListener('keydown', function(e) {
                 if (e.ctrlKey && e.shiftKey && (e.key === 'y' || e.key === 'Y')) {
                     e.preventDefault();
@@ -1188,12 +1604,12 @@
 
             document.addEventListener('click', function(e) {
                 const wrapper = document.getElementById('sidebarThemeWrapper');
-                if (!wrapper.contains(e.target)) {
+                if (wrapper && !wrapper.contains(e.target)) {
                     themeMenu.classList.remove('open');
                 }
             });
 
-            // ---------- TOAST ----------
+            // ---------- TOAST SYSTEM ----------
             function showToast(msg) {
                 const old = document.querySelector('.mototus-toast');
                 if (old) old.remove();
@@ -1213,41 +1629,744 @@
                 }, 2500);
             }
 
-            // ---------- CHAT UI ----------
-            const userInput = document.getElementById('userInput');
-            const chatMessages = document.getElementById('chatMessages');
-            const sendBtn = document.getElementById('sendBtn');
+            // ---------- CONFIGURATIONS & MODELS LIST ----------
+            const providerNames = {
+                groq: 'Groq AI',
+                gemini: 'Google Gemini',
+                mistral: 'Mistral AI',
+                cerebras: 'Cerebras AI',
+                cloudflare: 'Cloudflare AI'
+            };
 
-            const responses = [
-                "That's a great question! Let me think about it.",
-                "I understand. Here's what I can tell you about that.",
-                "Interesting point! Let me break it down for you.",
-                "I see what you mean. Let me provide some insights.",
-                "Thanks for asking! Here's my take on this.",
-                "Sure thing! I'll do my best to help.",
-                "Let me analyze that for you.",
-                "Good one! Here's a detailed explanation."
-            ];
+            const defaultPrompts = {
+                write: "Write a comprehensive article on: ",
+                learn: "Explain this core concept to me like I am 5 years old: ",
+                code: "Write efficient and secure code to: ",
+                life: "Provide wise, perspective-shifting coaching on: "
+            };
 
-            function getAIResponse(input) {
-                if (input.length < 3) return "Could you elaborate a bit more?";
-                if (input.includes('?')) return "That's a thoughtful question. " + responses[Math.floor(Math.random() * responses
-                    .length)];
-                return responses[Math.floor(Math.random() * responses.length)] + " (based on your input: \"" + input + "\")";
+            let savedPrompts = JSON.parse(localStorage.getItem('mototus-prompts')) || defaultPrompts;
+            let activeProvider = localStorage.getItem('mototus-active-provider') || 'groq';
+
+            // ---------- SMART AUTO-DETECTION MODEL GENERATOR ----------
+            function getDefaultModelForAPI(apiName) {
+                const mapping = {
+                    'groq': 'llama-2-70b-chat',
+                    'gemini': 'gemini-1.5-flash',
+                    'mistral': 'mistral-medium',
+                    'cloudflare': '@cf/mistral/mistral-7b-instruct-v0.1',
+                    'cerebras': 'carebrass-default-model'
+                };
+                return mapping[apiName] || 'default';
             }
 
-            // Create a message element
-            function createMessage(text, type) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'chat-message ' + type;
+            // ---------- DYNAMIC MODAL & SAVED SETTINGS ----------
+            function openSettings() {
+                // ISSUE 6: Read credentials with api_key_{provider} standard
+                document.getElementById('key-groq').value = localStorage.getItem('api_key_groq') || '';
+                document.getElementById('key-gemini').value = localStorage.getItem('api_key_gemini') || '';
+                document.getElementById('key-mistral').value = localStorage.getItem('api_key_mistral') || '';
+                document.getElementById('key-cerebras').value = localStorage.getItem('api_key_cerebras') || '';
+                document.getElementById('cf-account-id').value = localStorage.getItem('cf-account-id') || '';
+                document.getElementById('key-cloudflare').value = localStorage.getItem('api_key_cloudflare') || '';
 
-                if (type === 'user') {
+                document.getElementById('prompt-write').value = savedPrompts.write || defaultPrompts.write;
+                document.getElementById('prompt-learn').value = savedPrompts.learn || defaultPrompts.learn;
+                document.getElementById('prompt-code').value = savedPrompts.code || defaultPrompts.code;
+                document.getElementById('prompt-life').value = savedPrompts.life || defaultPrompts.life;
+
+                // Load Search Keys
+                loadSearchKeysFromStorage();
+
+                document.getElementById('settingsModal').classList.add('open');
+            }
+
+            function saveSettings() {
+                // ISSUE 6: Save API keys with api_key_{provider} format to localStorage
+                localStorage.setItem('api_key_groq', document.getElementById('key-groq').value.trim());
+                localStorage.setItem('api_key_gemini', document.getElementById('key-gemini').value.trim());
+                localStorage.setItem('api_key_mistral', document.getElementById('key-mistral').value.trim());
+                localStorage.setItem('api_key_cerebras', document.getElementById('key-cerebras').value.trim());
+                localStorage.setItem('cf-account-id', document.getElementById('cf-account-id').value.trim());
+                localStorage.setItem('api_key_cloudflare', document.getElementById('key-cloudflare').value.trim());
+
+                savedPrompts = {
+                    write: document.getElementById('prompt-write').value.trim(),
+                    learn: document.getElementById('prompt-learn').value.trim(),
+                    code: document.getElementById('prompt-code').value.trim(),
+                    life: document.getElementById('prompt-life').value.trim()
+                };
+                localStorage.setItem('mototus-prompts', JSON.stringify(savedPrompts));
+
+                // Save search keys as backup
+                window.saveSearchKeysToStorage();
+
+                // ISSUE 5: Settings save auto-close
+                document.getElementById('settingsModal').classList.remove('open');
+                showToast('💾 Settings Saved successfully!');
+            }
+
+            // Modal Interactions
+            document.getElementById('sidebarSettings').addEventListener('click', (e) => {
+                e.stopPropagation();
+                openSettings();
+            });
+
+            // ISSUE 5: Close on close button click
+            document.getElementById('settingsCloseBtn').addEventListener('click', () => {
+                document.getElementById('settingsModal').classList.remove('open');
+            });
+            
+            // ISSUE 5: Close on Backdrop Outside Click
+            document.getElementById('settingsModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('open');
+                }
+            });
+            
+            document.getElementById('settingsSaveBtn').addEventListener('click', saveSettings);
+
+            // Tab Navigation within Modal
+            document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.settings-tab-content').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+
+            // ---------- DYNAMIC SEARCH KEYS MANAGEMENT ----------
+            window.addNewSearchKeyField = function(provider, keyValue = '') {
+                const containerId = `${provider}-keys-container`;
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const row = document.createElement('div');
+                row.className = 'search-key-row';
+                row.innerHTML = `
+                    <input type="password" placeholder="Enter API Key..." value="${keyValue}" onchange="window.saveSearchKeysToStorage()" />
+                    <button class="search-key-remove-btn" onclick="this.parentNode.remove(); window.saveSearchKeysToStorage();" title="Remove Key">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(row);
+            };
+
+            window.saveSearchKeysToStorage = function() {
+                // Collect Serpapi Keys
+                const serpapiContainer = document.getElementById('serpapi-keys-container');
+                if (serpapiContainer) {
+                    const serpapiInputs = serpapiContainer.querySelectorAll('input');
+                    const serpapiKeys = Array.from(serpapiInputs).map(inp => inp.value.trim()).filter(v => v !== '');
+                    localStorage.setItem('mototus-serpapi-keys', JSON.stringify(serpapiKeys));
+                }
+
+                // Collect Tavily Keys
+                const tavilyContainer = document.getElementById('tavily-keys-container');
+                if (tavilyContainer) {
+                    const tavilyInputs = tavilyContainer.querySelectorAll('input');
+                    const tavilyKeys = Array.from(tavilyInputs).map(inp => inp.value.trim()).filter(v => v !== '');
+                    localStorage.setItem('mototus-tavily-keys', JSON.stringify(tavilyKeys));
+                }
+            };
+
+            function loadSearchKeysFromStorage() {
+                const serpapiKeys = JSON.parse(localStorage.getItem('mototus-serpapi-keys')) || [];
+                const tavilyKeys = JSON.parse(localStorage.getItem('mototus-tavily-keys')) || [];
+
+                document.getElementById('serpapi-keys-container').innerHTML = '';
+                document.getElementById('tavily-keys-container').innerHTML = '';
+
+                serpapiKeys.forEach(k => window.addNewSearchKeyField('serpapi', k));
+                tavilyKeys.forEach(k => window.addNewSearchKeyField('tavily', k));
+            }
+
+            // ---------- KEY VALIDATOR (checkHasKey) ----------
+            function checkHasKey(provider) {
+                if (provider === 'cloudflare') {
+                    const acc = localStorage.getItem('cf-account-id');
+                    const token = localStorage.getItem('api_key_cloudflare');
+                    return !!(acc && token);
+                }
+                if (provider === 'serpapi') {
+                    const keys = JSON.parse(localStorage.getItem('mototus-serpapi-keys')) || [];
+                    return keys.length > 0 && keys.some(k => k.trim() !== '');
+                }
+                if (provider === 'tavily') {
+                    const keys = JSON.parse(localStorage.getItem('mototus-tavily-keys')) || [];
+                    return keys.length > 0 && keys.some(k => k.trim() !== '');
+                }
+                return !!localStorage.getItem('api_key_' + provider);
+            }
+
+            // ---------- CUSTOM MULTI-COLOR SYNTAX HIGHLIGHTER ----------
+            function highlightCode(code, lang) {
+                lang = (lang || 'plaintext').toLowerCase();
+                let escaped = escapeHtml(code);
+                
+                let tokens = [];
+                const addToken = (placeholder, html) => {
+                    tokens.push({ placeholder, html });
+                };
+
+                // 1. Comments Tokenization (//, /* */, #) [888888]
+                let commentCount = 0;
+                escaped = escaped.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)/g, (match) => {
+                    const ph = `__COMMENT_TOKEN_${commentCount}__`;
+                    addToken(ph, `<span class="syn-comment">${match}</span>`);
+                    commentCount++;
+                    return ph;
+                });
+
+                // 2. Strings Tokenization [52E552]
+                let stringCount = 0;
+                escaped = escaped.replace(/("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)/g, (match) => {
+                    const ph = `__STRING_TOKEN_${stringCount}__`;
+                    addToken(ph, `<span class="syn-string">${match}</span>`);
+                    stringCount++;
+                    return ph;
+                });
+
+                // 3. Numbers Tokenization [FF9933]
+                let numberCount = 0;
+                escaped = escaped.replace(/\b(\d+(?:\.\d+)?)\b/g, (match) => {
+                    const ph = `__NUMBER_TOKEN_${numberCount}__`;
+                    addToken(ph, `<span class="syn-number">${match}</span>`);
+                    numberCount++;
+                    return ph;
+                });
+
+                // 4. Markup Highlighting (Tags [FF6B6B], Attributes [87CEEB])
+                if (lang === 'html' || lang === 'xml' || lang === 'svg') {
+                    escaped = escaped.replace(/(&lt;\/?[a-zA-Z0-9:]+)(\s|&gt;)/g, '<span class="syn-tag">$1</span>$2');
+                    escaped = escaped.replace(/(&lt;\/?[a-zA-Z0-9:]+)([\s\S]*?)(&gt;)/g, (m, p1, p2, p3) => {
+                        let highlightedP2 = p2.replace(/\b([a-zA-Z\-]+)=/g, '<span class="syn-attr">$1</span>=');
+                        return `<span class="syn-tag">${p1}</span>${highlightedP2}<span class="syn-tag">${p3}</span>`;
+                    });
+                }
+
+                // 5. Language Keywords Matching [B084FF]
+                const keywords = ['const', 'var', 'let', 'function', 'class', 'return', 'if', 'else', 'for', 'while', 'do', 'switch', 'case', 'break', 'continue', 'import', 'export', 'from', 'default', 'new', 'this', 'def', 'print', 'elif', 'try', 'except', 'finally', 'with', 'as', 'lambda', 'and', 'or', 'not', 'is', 'in', 'pass', 'raise'];
+                const keywordsRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+                escaped = escaped.replace(keywordsRegex, '<span class="syn-keyword">$1</span>');
+
+                // 6. Operators Highlighting [FFFF00]
+                escaped = escaped.replace(/([+\-*\/=<>!%&|^~]+)/g, '<span class="syn-op">$1</span>');
+
+                // 7. Functions & Methods Highlighting [00FFFF]
+                escaped = escaped.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="syn-func">$1</span>');
+
+                // Restore protected Comments, Strings, and Numbers
+                for (let i = tokens.length - 1; i >= 0; i--) {
+                    escaped = escaped.split(tokens[i].placeholder).join(tokens[i].html);
+                }
+
+                return escaped;
+            }
+
+            // ---------- MARKDOWN, CODE CONTAINER & ESCAPING ----------
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            function formatMarkdown(text) {
+                let html = escapeHtml(text);
+                const codeBlocks = [];
+                const blockPlaceholder = (index) => `__CODE_BLOCK_PLACEHOLDER_${index}__`;
+
+                const regex = /```(\w*)\n([\s\S]*?)```/g;
+                html = html.replace(regex, (match, lang, code) => {
+                    lang = lang || 'plaintext';
+                    const blockId = 'code-' + Math.random().toString(36).substr(2, 9);
+                    const cleanCode = code.trim();
+                    const highlighted = highlightCode(cleanCode, lang);
+
+                    const codeBlockHtml = `
+                    <div class="code-block-container" id="${blockId}">
+                        <div class="code-block-header">
+                            <span class="code-block-lang">${lang}</span>
+                            <div class="code-block-tabs">
+                                <button class="tab-btn active" onclick="window.switchCodeBlockTab('${blockId}', 'code')"><i class="fa-solid fa-code"></i> Code</button>
+                                <button class="tab-btn" onclick="window.switchCodeBlockTab('${blockId}', 'preview')"><i class="fa-solid fa-desktop"></i> Output Preview</button>
+                            </div>
+                            <div class="code-block-actions">
+                                <button class="code-block-btn" onclick="window.runErrorChecker('${blockId}')">
+                                    <i class="fa-solid fa-triangle-exclamation" style="color: #ffd700;"></i> 🔍 Error Checker
+                                </button>
+                                <button class="code-block-btn copy-btn" onclick="window.copyCodeBlock('${blockId}')">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                                <button class="code-block-btn download-btn" onclick="window.downloadCodeBlock('${blockId}', '${lang}')">
+                                    <i class="fa-solid fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                        <pre class="code-block-body"><code class="language-${lang}">${highlighted}</code></pre>
+                        
+                        <!-- PC Monitor Frame UI -->
+                        <div class="pc-monitor-wrapper" style="display: none; padding: 12px;">
+                            <div class="pc-monitor-frame">
+                                <div class="pc-monitor-header">
+                                    <span class="pc-monitor-title"><i class="fa-solid fa-circle"></i> SYSTEM ONLINE</span>
+                                    <button class="pc-monitor-clear-btn" onclick="window.clearMonitorOutput('${blockId}')">Clear</button>
+                                </div>
+                                <div class="pc-monitor-screen"></div>
+                            </div>
+                            <div class="pc-monitor-stand"></div>
+                            <div class="pc-monitor-base"></div>
+                        </div>
+                    </div>
+                    `;
+                    codeBlocks.push(codeBlockHtml);
+                    return blockPlaceholder(codeBlocks.length - 1);
+                });
+
+                // Bold Markdown formatting: **bold**
+                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+                // Inline code formatting: `code`
+                html = html.replace(/`(.*?)`/g, '<code class="inline-code">$1</code>');
+
+                // Line breaks
+                html = html.replace(/\n/g, '<br>');
+
+                // Restore code blocks safely
+                codeBlocks.forEach((blockHtml, index) => {
+                    html = html.split(blockPlaceholder(index)).join(blockHtml);
+                });
+
+                return html;
+            }
+
+            // ---------- CRITICAL ISSUE 3: TYPEWRITER TOKEN ENGINE (buildTypewriterQueue) ----------
+            function buildTypewriterQueue(rawText) {
+                const queue = [];
+                const regex = /```(\w*)\n([\s\S]*?)```/g;
+                let match;
+                let lastIndex = 0;
+
+                while ((match = regex.exec(rawText)) !== null) {
+                    const textBefore = rawText.slice(lastIndex, match.index);
+                    if (textBefore) {
+                        queue.push(...tokenizeFormattedText(textBefore));
+                    }
+
+                    const lang = match[1] || 'plaintext';
+                    const code = match[2];
+                    const blockId = 'code-' + Math.random().toString(36).substr(2, 9);
+
+                    queue.push({
+                        type: 'create_code_block',
+                        id: blockId,
+                        lang: lang
+                    });
+
+                    // Push each line of code as an instruction for streaming line effect
+                    const lines = code.split('\n');
+                    lines.forEach((line, idx) => {
+                        const lineText = line + (idx < lines.length - 1 ? '\n' : '');
+                        queue.push({
+                            type: 'code_line',
+                            id: blockId,
+                            value: lineText
+                        });
+                    });
+
+                    lastIndex = regex.lastIndex;
+                }
+
+                const textAfter = rawText.slice(lastIndex);
+                if (textAfter) {
+                    queue.push(...tokenizeFormattedText(textAfter));
+                }
+
+                return queue;
+            }
+
+            function tokenizeFormattedText(text) {
+                let html = escapeHtml(text);
+                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/`(.*?)`/g, '<code class="inline-code">$1</code>');
+                html = html.replace(/\n/g, '<br>');
+
+                const tokens = [];
+                let i = 0;
+                while (i < html.length) {
+                    if (html[i] === '<') {
+                        let tagClose = html.indexOf('>', i);
+                        if (tagClose !== -1) {
+                            tokens.push({ type: 'tag', value: html.substring(i, tagClose + 1) });
+                            i = tagClose + 1;
+                        } else {
+                            tokens.push({ type: 'char', value: html[i] });
+                            i++;
+                        }
+                    } else {
+                        tokens.push({ type: 'char', value: html[i] });
+                        i++;
+                    }
+                }
+                return tokens;
+            }
+
+            // ---------- SYSTEM: TAB SWITCHER & PC RUN CONTROLLERS ----------
+            window.switchCodeBlockTab = function(blockId, tab) {
+                const container = document.getElementById(blockId);
+                if (!container) return;
+                
+                const codeBody = container.querySelector('.code-block-body');
+                const monitorFrame = container.querySelector('.pc-monitor-wrapper');
+                const tabs = container.querySelectorAll('.code-block-tabs .tab-btn');
+                
+                tabs.forEach(btn => {
+                    if (btn.getAttribute('onclick').includes(`'${tab}'`)) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                if (tab === 'code') {
+                    codeBody.style.display = 'block';
+                    monitorFrame.style.display = 'none';
+                } else {
+                    codeBody.style.display = 'none';
+                    monitorFrame.style.display = 'block';
+                    const screen = container.querySelector('.pc-monitor-screen');
+                    if (!screen.hasChildNodes() || screen.innerHTML.trim() === '') {
+                        window.runCodeBlock(blockId, container.querySelector('.code-block-lang').textContent);
+                    }
+                }
+            };
+
+            window.clearMonitorOutput = function(blockId) {
+                const container = document.getElementById(blockId);
+                if (!container) return;
+                const screen = container.querySelector('.pc-monitor-screen');
+                if (screen) {
+                    screen.innerHTML = '<span style="color: #666; font-style: italic;">Console cleared.</span>';
+                }
+            };
+
+            window.runCodeBlock = function(id, lang) {
+                const container = document.getElementById(id);
+                if (!container) return;
+                const codeEl = container.querySelector('code');
+                const screen = container.querySelector('.pc-monitor-screen');
+                if (!codeEl || !screen) return;
+                
+                const codeText = codeEl.textContent;
+                lang = (lang || 'plaintext').toLowerCase();
+                screen.innerHTML = '';
+                
+                try {
+                    if (lang === 'js' || lang === 'javascript') {
+                        const consoleLogs = [];
+                        const originalLog = console.log;
+                        console.log = function(...args) {
+                            consoleLogs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '));
+                        };
+                        
+                        let returnVal;
+                        try {
+                            returnVal = eval(codeText);
+                        } catch (evalErr) {
+                            returnVal = `Error: ${evalErr.message}`;
+                        }
+                        console.log = originalLog;
+                        
+                        let outputHTML = '';
+                        if (consoleLogs.length > 0) {
+                            outputHTML += `<div style="color: #52E552; margin-bottom: 8px;"><strong>Console Logs:</strong></div>`;
+                            consoleLogs.forEach(log => {
+                                outputHTML += `<div style="color: #e3e6ed; margin-bottom: 4px;">&gt; ${escapeHtml(log)}</div>`;
+                            });
+                        }
+                        outputHTML += `<div style="color: #00ffff; margin-top: 10px;"><strong>Returned Value:</strong></div>`;
+                        outputHTML += `<div style="color: #ffd700;">&gt; ${escapeHtml(String(returnVal))}</div>`;
+                        screen.innerHTML = outputHTML;
+                        
+                    } else if (lang === 'html') {
+                        const iframe = document.createElement('iframe');
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100%';
+                        iframe.style.border = 'none';
+                        iframe.style.background = '#ffffff';
+                        screen.appendChild(iframe);
+                        
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        doc.open();
+                        doc.write(codeText);
+                        doc.close();
+                        
+                    } else if (lang === 'css') {
+                        screen.innerHTML = `
+                            <div style="color: #B084FF; font-weight: bold; margin-bottom: 6px;">CSS Loaded to Output Frame:</div>
+                            <style>${codeText}</style>
+                            <div class="css-demo" style="padding: 15px; border-radius: 8px; border: 1px solid #444; text-align: center; background: #111;">
+                                Styled CSS Sandbox target.
+                            </div>
+                        `;
+                    } else if (lang === 'py' || lang === 'python') {
+                        const lines = codeText.split('\n');
+                        let outputHTML = `<div style="color: #ff9933; margin-bottom: 8px;"><i class="fa-brands fa-python"></i> Python 3 execution output:</div>`;
+                        let hasOutput = false;
+                        
+                        lines.forEach(line => {
+                            const trimmed = line.trim();
+                            if (trimmed.startsWith('print(')) {
+                                const match = trimmed.match(/print\((.*)\)/);
+                                if (match && match[1]) {
+                                    hasOutput = true;
+                                    let raw = match[1].trim();
+                                    if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
+                                        raw = raw.slice(1, -1);
+                                    }
+                                    outputHTML += `<div style="color: #fff; margin-bottom: 4px;">${escapeHtml(raw)}</div>`;
+                                }
+                            }
+                        });
+                        
+                        if (!hasOutput) {
+                            outputHTML += `<div style="color: #777; font-style: italic;">Script executed with code 0 (no logs).</div>`;
+                        }
+                        screen.innerHTML = outputHTML;
+                    } else {
+                        screen.innerHTML = `<span style="color: #52E552;">Compiled & Virtualized successfully.</span>`;
+                    }
+                } catch (err) {
+                    screen.innerHTML = `<span style="color: #e63946;"><strong>Runtime Error:</strong> ${err.message}</span>`;
+                }
+            };
+
+            // ---------- SYSTEM: AI ERROR CHECKER ----------
+            window.runErrorChecker = async function(id) {
+                const container = document.getElementById(id);
+                if (!container) return;
+                const codeEl = container.querySelector('code');
+                const langEl = container.querySelector('.code-block-lang');
+                const lang = langEl ? langEl.textContent : 'javascript';
+                if (!codeEl) return;
+
+                const rawCode = codeEl.textContent;
+
+                // Show spinner loader inside block
+                let loader = container.querySelector('.code-block-loader');
+                if (!loader) {
+                    loader = document.createElement('div');
+                    loader.className = 'code-block-loader';
+                    loader.innerHTML = `
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:12px; color:#fff;">
+                            <i class="fa-solid fa-spinner fa-spin" style="font-size:32px; color:var(--accent);"></i>
+                            <span style="font-size:12px; font-weight:700; letter-spacing:0.5px;">🔍 AI ERROR CHECKER ACTIVE...</span>
+                        </div>
+                    `;
+                    container.appendChild(loader);
+                }
+                loader.style.display = 'flex';
+
+                const provider = activeProvider;
+                const model = getDefaultModelForAPI(activeProvider);
+
+                const queryInstruction = `You are a debug system compiler. Review this code, fix syntax compilation errors, bugs, loops and structural faults. Output ONLY corrected code. Do NOT write markdown blocks, backticks, conversational chat or commentaries. Return raw clean code.`;
+
+                try {
+                    const controller = new AbortController();
+                    activeControllers.push(controller);
+
+                    const resText = await callAPI(provider, model, `${queryInstruction}\n\nCode to repair:\n${rawCode}`, controller.signal);
+                    
+                    let cleaned = resText.trim();
+                    if (cleaned.startsWith('```')) {
+                        const lines = cleaned.split('\n');
+                        if (lines[0].startsWith('```')) lines.shift();
+                        if (lines[lines.length - 1] === '```') lines.pop();
+                        cleaned = lines.join('\n');
+                    }
+
+                    codeEl.textContent = cleaned;
+                    codeEl.innerHTML = highlightCode(cleaned, lang);
+
+                    showToast('🚀 Patches successfully completed!');
+                } catch (err) {
+                    console.error(err);
+                    showToast(`❌ Debugger Error: ${err.message}`);
+                } finally {
+                    loader.style.display = 'none';
+                }
+            };
+
+            window.copyCodeBlock = function(id) {
+                const container = document.getElementById(id);
+                if (!container) return;
+                const codeEl = container.querySelector('code');
+                if (!codeEl) return;
+
+                const temp = document.createElement('textarea');
+                temp.value = codeEl.textContent;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                showToast('📋 Code copied to clipboard!');
+            };
+
+            window.downloadCodeBlock = function(id, lang) {
+                const container = document.getElementById(id);
+                if (!container) return;
+                const codeEl = container.querySelector('code');
+                if (!codeEl) return;
+
+                const codeText = codeEl.textContent;
+                let ext = 'txt';
+                if (lang === 'js' || lang === 'javascript') ext = 'js';
+                else if (lang === 'html') ext = 'html';
+                else if (lang === 'py' || lang === 'python') ext = 'py';
+                else if (lang === 'css') ext = 'css';
+                else if (lang === 'json') ext = 'json';
+
+                const blob = new Blob([codeText], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `mototus-code-${id}.${ext}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast(`💾 Saved as mototus-code-${id}.${ext}`);
+            };
+
+            // ---------- SYSTEM: COGNITIVE SEARCH CLASSIFIER ----------
+            function needsInternetSearch(prompt) {
+                const lookupWords = [
+                    'search', 'google', 'find', 'latest', 'news', 'current', 'weather', 'today', 'yesterday',
+                    'now', 'live', 'time', 'score', 'who is', 'stock price', 'price of', 'population', 'how much',
+                    'recent', 'update', 'status', 'tell me about', 'wikipedia', 'lookup'
+                ];
+                const lower = prompt.toLowerCase();
+                return lookupWords.some(word => lower.includes(word));
+            }
+
+            async function performSearch(query) {
+                const serpapiKeys = JSON.parse(localStorage.getItem('mototus-serpapi-keys')) || [];
+                const tavilyKeys = JSON.parse(localStorage.getItem('mototus-tavily-keys')) || [];
+
+                const executionChain = [];
+                tavilyKeys.forEach(k => {
+                    if (k.trim()) executionChain.push({ provider: 'tavily', key: k.trim() });
+                });
+                serpapiKeys.forEach(k => {
+                    if (k.trim()) executionChain.push({ provider: 'serpapi', key: k.trim() });
+                });
+
+                if (executionChain.length === 0) {
+                    console.log('No search keys configured.');
+                    return null;
+                }
+
+                let finalResult = null;
+                let activeEngine = '';
+
+                for (const item of executionChain) {
+                    try {
+                        if (item.provider === 'tavily') {
+                            showToast('🔍 Searching Tavily for live results...');
+                            const res = await fetch('https://api.tavily.com/search', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    api_key: item.key,
+                                    query: query,
+                                    max_results: 5
+                                })
+                            });
+                            if (!res.ok) throw new Error(`Tavily error: ${res.statusText}`);
+                            const data = await res.json();
+                            if (data && data.results) {
+                                finalResult = data.results.map(r => `Source: ${r.title} (${r.url})\nContent: ${r.content}`).join('\n\n');
+                                activeEngine = 'Tavily Search';
+                                break;
+                            }
+                        } else if (item.provider === 'serpapi') {
+                            showToast('🔍 Querying Google index (Serpapi)...');
+                            const url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(query)}&api_key=${item.key}`;
+                            const res = await fetch(url);
+                            if (!res.ok) throw new Error(`Serpapi error: ${res.statusText}`);
+                            const data = await res.json();
+                            if (data && data.organic_results) {
+                                finalResult = data.organic_results.slice(0, 5).map(r => `Source: ${r.title} (${r.link})\nSnippet: ${r.snippet}`).join('\n\n');
+                                activeEngine = 'Serpapi Google Search';
+                                break;
+                            }
+                        }
+                    } catch (err) {
+                        console.warn(`Search route ${item.provider} failed:`, err);
+                    }
+                }
+
+                if (finalResult) {
+                    return { results: finalResult, provider: activeEngine };
+                }
+                return null;
+            }
+
+            // ---------- SINGLE REQUESTS WITH AUTO-FALLBACK ROUTING ----------
+            const fallbackChain = ['groq', 'gemini', 'mistral', 'cerebras', 'cloudflare'];
+
+            async function getResponseWithFallback(activeProv, userPrompt) {
+                const isFallbackEnabled = JSON.parse(localStorage.getItem('fallback-enabled')) || false;
+                
+                const activeModel = getDefaultModelForAPI(activeProv);
+
+                if (!isFallbackEnabled) {
+                    const text = await callAPI(activeProv, activeModel, userPrompt);
+                    return { text, usedProvider: activeProv };
+                }
+
+                // Generate sequence starting with selected provider
+                const index = fallbackChain.indexOf(activeProv);
+                const sequence = [
+                    ...fallbackChain.slice(index),
+                    ...fallbackChain.slice(0, index)
+                ];
+
+                let finalError = null;
+                for (const prov of sequence) {
+                    if (!checkHasKey(prov)) continue; // skip unconfigured providers
+
+                    try {
+                        if (prov !== activeProv) {
+                            showToast(`🔄 Attempting fallback API: ${providerNames[prov]}`);
+                        }
+                        const modelToCall = getDefaultModelForAPI(prov);
+                        const text = await callAPI(prov, modelToCall, userPrompt);
+                        return { text, usedProvider: prov };
+                    } catch (e) {
+                        console.warn(`Fallback target ${prov} failed:`, e);
+                        finalError = e;
+                    }
+                }
+                throw finalError || new Error('No APIs are configured inside Settings panel.');
+            }
+
+            // ---------- MISSING CRITICAL FUNCTION 1: createMessage ----------
+            function createMessage(text, role) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chat-message ' + role;
+
+                if (role === 'user') {
                     const bubble = document.createElement('div');
                     bubble.className = 'bubble';
                     bubble.textContent = text;
                     wrapper.appendChild(bubble);
                 } else {
-                    // AI message: avatar (red brain, no background) + bubble
                     const avatar = document.createElement('div');
                     avatar.className = 'avatar';
                     avatar.innerHTML = `
@@ -1267,260 +2386,461 @@
                 return wrapper;
             }
 
-            // ---- FIXED: added isTyping flag to prevent race condition ----
-            let isTyping = false;
-
-            // Typewriter effect inside an AI bubble
-            function typeWriterAI(text, messageElement) {
-                const bubble = messageElement.querySelector('.bubble');
-                bubble.innerHTML = '';
-                let index = 0;
-                const cursorSpan = document.createElement('span');
-                cursorSpan.className = 'cursor-blink';
-                bubble.appendChild(cursorSpan);
-
-                function typeChar() {
-                    if (index < text.length) {
-                        const char = text.charAt(index);
-                        const textNode = document.createTextNode(char);
-                        bubble.insertBefore(textNode, cursorSpan);
-                        index++;
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                        setTimeout(typeChar, 25 + Math.random() * 30);
-                    } else {
-                        if (cursorSpan.parentNode) cursorSpan.remove();
-                        messageElement.classList.remove('typing');
-                        // typing finished
-                        isTyping = false;
-                    }
+            // ---------- MISSING CRITICAL FUNCTION 2: setSendButtonState ----------
+            function setSendButtonState(isActive) {
+                if (isActive) {
+                    sendBtn.classList.add('stop-active');
+                    sendBtn.innerHTML = '<i class="fa-solid fa-circle-stop"></i>';
+                    sendBtn.setAttribute('title', 'Stop Response');
+                } else {
+                    sendBtn.classList.remove('stop-active');
+                    sendBtn.innerHTML = '<i class="fa-regular fa-paper-plane"></i>';
+                    sendBtn.setAttribute('title', 'Send Message');
                 }
-                isTyping = true;
-                typeChar();
             }
 
-            function handleSend() {
-                // Prevent sending while AI is typing
-                if (isTyping) {
-                    showToast('⏳ Please wait for the current response to finish.');
-                    return;
+            // ---------- MISSING CRITICAL FUNCTION 3: abortAllActiveRequests ----------
+            function abortAllActiveRequests() {
+                activeControllers.forEach(controller => {
+                    try {
+                        controller.abort();
+                    } catch (e) {
+                        console.warn('Aborting request failed:', e);
+                    }
+                });
+                activeControllers = [];
+            }
+
+            // ---------- MISSING CRITICAL HELPER: buildCodeBlockHTML ----------
+            function buildCodeBlockHTML(blockId, lang) {
+                return `
+                <div class="code-block-container" id="${blockId}">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">${lang}</span>
+                        <div class="code-block-tabs">
+                            <button class="tab-btn active" onclick="window.switchCodeBlockTab('${blockId}', 'code')"><i class="fa-solid fa-code"></i> Code</button>
+                            <button class="tab-btn" onclick="window.switchCodeBlockTab('${blockId}', 'preview')"><i class="fa-solid fa-desktop"></i> Output Preview</button>
+                        </div>
+                        <div class="code-block-actions">
+                            <button class="code-block-btn" onclick="window.runErrorChecker('${blockId}')">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: #ffd700;"></i> 🔍 Error Checker
+                            </button>
+                            <button class="code-block-btn copy-btn" onclick="window.copyCodeBlock('${blockId}')">
+                                <i class="fa-regular fa-copy"></i> Copy
+                            </button>
+                            <button class="code-block-btn download-btn" onclick="window.downloadCodeBlock('${blockId}', '${lang}')">
+                                <i class="fa-solid fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    <pre class="code-block-body"><code class="language-${lang}"></code></pre>
+                    
+                    <!-- PC Monitor Frame UI -->
+                    <div class="pc-monitor-wrapper" style="display: none; padding: 12px;">
+                        <div class="pc-monitor-frame">
+                            <div class="pc-monitor-header">
+                                <span class="pc-monitor-title"><i class="fa-solid fa-circle"></i> SYSTEM ONLINE</span>
+                                <button class="pc-monitor-clear-btn" onclick="window.clearMonitorOutput('${blockId}')">Clear</button>
+                            </div>
+                            <div class="pc-monitor-screen"></div>
+                        </div>
+                        <div class="pc-monitor-stand"></div>
+                        <div class="pc-monitor-base"></div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // ---------- MISSING CRITICAL FUNCTION 4: startTypewriter ----------
+            function startTypewriter(queue, bubbleEl, msgEl, callback) {
+                msgEl.classList.remove('typing'); // Stop avatar loading flip initially
+                bubbleEl.innerHTML = '';
+                
+                const cursorSpan = document.createElement('span');
+                cursorSpan.className = 'cursor-blink';
+                bubbleEl.appendChild(cursorSpan);
+
+                let charIndex = 0;
+                const TYPING_DELAY = 33; // 30X speed
+
+                function typeNextChar() {
+                    if (stopRequested || charIndex >= queue.length) {
+                        if (cursorSpan.parentNode) cursorSpan.remove();
+                        msgEl.classList.remove('typing');
+                        callback();
+                        return;
+                    }
+
+                    const item = queue[charIndex];
+
+                    switch(item.type) {
+                        case 'char':
+                            const txtNode = document.createTextNode(item.value);
+                            bubbleEl.insertBefore(txtNode, cursorSpan);
+                            break;
+                        case 'tag':
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = item.value;
+                            while (tempDiv.firstChild) {
+                                bubbleEl.insertBefore(tempDiv.firstChild, cursorSpan);
+                            }
+                            break;
+                        case 'create_code_block':
+                            const blockHTML = buildCodeBlockHTML(item.id, item.lang);
+                            const tempBlock = document.createElement('div');
+                            tempBlock.innerHTML = blockHTML;
+                            while (tempBlock.firstChild) {
+                                bubbleEl.insertBefore(tempBlock.firstChild, cursorSpan);
+                            }
+                            break;
+                        case 'code_line':
+                            const codeBlock = document.getElementById(item.id);
+                            if (codeBlock) {
+                                const codeBody = codeBlock.querySelector('.code-block-body code');
+                                const langEl = codeBlock.querySelector('.code-block-lang');
+                                const lang = langEl ? langEl.textContent : 'javascript';
+                                if (codeBody) {
+                                    codeBody.textContent += item.value;
+                                    // Live line syntax highlighting
+                                    codeBody.innerHTML = highlightCode(codeBody.textContent, lang);
+                                }
+                            }
+                            break;
+                    }
+
+                    // Auto-scroll down
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    charIndex++;
+                    typewriterTimeout = setTimeout(typeNextChar, TYPING_DELAY);
                 }
 
+                typeNextChar();
+            }
+
+            // ---------- CORE SEND EVENT HANDLER ----------
+            async function handleSend() {
                 const inputText = userInput.value.trim();
-                if (!inputText) {
-                    showToast('Please type something first.');
+                if (!inputText) return;
+
+                // Validate corresponding key is configured using standard checkHasKey
+                if (!checkHasKey(activeProvider)) {
+                    showToast(`🔑 Configure API Key for ${providerNames[activeProvider]} in Settings first!`);
+                    openSettings();
                     return;
                 }
 
-                // Append User Message
+                // Append user bubble
                 const userMsg = createMessage(inputText, 'user');
                 chatMessages.appendChild(userMsg);
                 userInput.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                // Show "Thinking..." placeholder for AI with typing animation
-                const aiMsg = createMessage('Thinking...', 'ai');
-                aiMsg.classList.add('typing'); // Avatar flips
+                // Set UI Lock State
+                isTyping = true;
+                stopRequested = false;
+                userInput.disabled = true;
+                setSendButtonState(true);
+
+                // Build AI container bubble
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'chat-message ai typing';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar';
+                avatar.innerHTML = `
+                    <div class="mini-orbit">
+                        <div class="half left"><i class="fas fa-brain"></i></div>
+                        <div class="half right"><i class="fas fa-brain"></i></div>
+                        <div class="line"></div>
+                    </div>
+                `;
+                aiMsg.appendChild(avatar);
+
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                aiMsg.appendChild(bubble);
+
                 chatMessages.appendChild(aiMsg);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                // Simulate AI response
-                setTimeout(() => {
-                    const response = getAIResponse(inputText);
-                    typeWriterAI(response, aiMsg);
-                }, 400 + Math.random() * 400);
+                // Analyze if Internet search is beneficial
+                let searchData = null;
+                try {
+                    if (needsInternetSearch(inputText)) {
+                        bubble.innerHTML = '🔍 Resolving internet routing...';
+                        searchData = await performSearch(inputText);
+                    }
+                } catch(searchErr) {
+                    console.warn("Search fetch failed:", searchErr);
+                }
+
+                // Render placeholder before typing begins
+                bubble.innerHTML = '<span class="cursor-blink"></span>';
+                const controller = new AbortController();
+                activeControllers.push(controller);
+
+                let augmentedPrompt = inputText;
+                let searchNotice = '';
+                if (searchData) {
+                    augmentedPrompt = `You are a helpful assistant with access to real-time search results. Use the following context retrieved from the internet to answer the user's question as accurately and up-to-date as possible. Give a detailed answer and cite the sources/URLs mentioned in the context directly.\n\nContext retrieved from the internet:\n${searchData.results}\n\nUser Question:\n${inputText}`;
+                    searchNotice = `<div style="font-size:11px; color: var(--text-muted); margin-bottom: 8px; border-bottom: 1px dashed var(--border-color); padding-bottom: 6px;"><i class="fa-solid fa-globe"></i> Search Results from <strong>${searchData.provider}</strong> integrated.</div>`;
+                }
+
+                try {
+                    const result = await getResponseWithFallback(activeProvider, augmentedPrompt);
+                    
+                    conversationHistory.push({ role: 'user', content: inputText });
+                    conversationHistory.push({ role: 'assistant', content: result.text });
+
+                    const finalCombined = searchNotice + result.text;
+                    const queue = buildTypewriterQueue(finalCombined);
+
+                    startTypewriter(queue, bubble, aiMsg, () => {
+                        isTyping = false;
+                        userInput.disabled = false;
+                        setSendButtonState(false);
+                        activeControllers = [];
+                    });
+                } catch (err) {
+                    aiMsg.classList.remove('typing');
+                    if (err.name === 'AbortError') {
+                        bubble.innerHTML = '<span style="color: var(--text-muted);">Aborted by user.</span>';
+                    } else {
+                        bubble.innerHTML = `<span style="color: #ff4a5a;">Error: ${err.message}</span>`;
+                    }
+                    isTyping = false;
+                    userInput.disabled = false;
+                    setSendButtonState(false);
+                    activeControllers = [];
+                }
             }
 
-            // Event listeners
-            sendBtn.addEventListener('click', handleSend);
+            // Bind triggers
+            sendBtn.addEventListener('click', function() {
+                if (isTyping) {
+                    abortAllActiveRequests();
+                    isTyping = false;
+                    userInput.disabled = false;
+                    setSendButtonState(false);
+                    showToast('⏹️ All streams aborted.');
+                    document.querySelectorAll('.chat-message.typing').forEach(el => el.classList.remove('typing'));
+                } else {
+                    handleSend();
+                }
+            });
 
-            userInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
+            userInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey && !isTyping) {
                     e.preventDefault();
                     handleSend();
                 }
             });
 
-            // New Chat Trigger relocated to Sidebar Plus Icon
-            const sidebarNewChatBtn = document.getElementById('sidebarNewChatBtn');
-            if (sidebarNewChatBtn) {
-                sidebarNewChatBtn.addEventListener('click', function() {
-                    chatMessages.innerHTML = '';
-                    userInput.value = '';
-                    isTyping = false; // reset in case typing was ongoing
-                    showToast('✨ New conversation started');
-                    userInput.focus();
-                    this.style.transform = 'scale(0.88) rotate(90deg)';
-                    setTimeout(() => { this.style.transform = ''; }, 300);
-                });
-            }
-
-            // ---------- DOCUMENT TRANSFER SYSTEM ----------
-            const docUploadBtn = document.getElementById('docUploadBtn');
-            const docFileInput = document.getElementById('docFileInput');
-
-            if (docUploadBtn && docFileInput) {
-                docUploadBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    docFileInput.click();
-                });
-
-                docFileInput.addEventListener('change', function() {
-                    if (docFileInput.files.length === 0) return;
-                    const file = docFileInput.files[0];
-                    showToast('📁 Loading document: ' + file.name);
-
-                    // If API is active, dispatch to the second custom auto-detection engine
-                    const rawConfig = localStorage.getItem('mototus-smart-api-config');
-                    let hasApi = false;
-                    if (rawConfig) {
-                        try {
-                            const c = JSON.parse(rawConfig);
-                            if (c && c.apiKey) hasApi = true;
-                        } catch(e){}
-                    }
-
-                    if (hasApi) {
-                        const event = new CustomEvent('mototus-doc-uploaded', { detail: file });
-                        window.dispatchEvent(event);
-                    } else {
-                        // Local simulated fallback behavior
-                        if (isTyping) {
-                            showToast('⏳ Please wait for the current response to finish.');
-                            return;
-                        }
-
-                        const docText = `📁 Uploaded document: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-                        const userMsg = createMessage(docText, 'user');
-                        chatMessages.appendChild(userMsg);
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                        const aiMsg = createMessage('Thinking...', 'ai');
-                        aiMsg.classList.add('typing');
-                        chatMessages.appendChild(aiMsg);
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                        setTimeout(() => {
-                            const response = `I have successfully received and processed your document: "${file.name}". What parameters or fields would you like me to examine?`;
-                            typeWriterAI(response, aiMsg);
-                        }, 800 + Math.random() * 400);
-                    }
-                    docFileInput.value = ''; // Reset input to allow re-uploads
-                });
-            }
-
-            // ---------- MODEL DROPDOWN ----------
-            const modelTrigger = document.getElementById('modelDropdownTrigger');
-            const modelMenu = document.getElementById('modelDropdownMenu');
-            const modelItems = modelMenu.querySelectorAll('.model-dropdown-item');
-            const modelSelectedLabel = document.getElementById('modelSelectedLabel');
-
-            modelTrigger.addEventListener('click', function(e) {
-                e.stopPropagation();
-                modelMenu.classList.toggle('open');
-                modelTrigger.classList.toggle('open');
-                if (modelMenu.classList.contains('open')) {
-                    modelTrigger.style.transform = 'scale(0.96)';
-                    setTimeout(() => { modelTrigger.style.transform = ''; }, 150);
-                }
-            });
-
-            modelItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const label = this.querySelector('.item-label').textContent.trim();
-                    modelSelectedLabel.textContent = label;
-                    modelItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    modelMenu.classList.remove('open');
-                    modelTrigger.classList.remove('open');
-                    showToast('🧠 Model: ' + label);
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => { this.style.transform = ''; }, 150);
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                const dd = document.getElementById('modelDropdown');
-                if (!dd.contains(e.target)) {
-                    modelMenu.classList.remove('open');
-                    modelTrigger.classList.remove('open');
-                }
-            });
-
-            // ---------- QUALITY DROPDOWN ----------
-            const trigger = document.getElementById('dropdownTrigger');
-            const menu = document.getElementById('dropdownMenu');
-            const selectedLabel = document.getElementById('selectedLabel');
-            const items = menu.querySelectorAll('.premium-dropdown-item');
-
-            trigger.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menu.classList.toggle('open');
-                trigger.classList.toggle('open');
-                if (menu.classList.contains('open')) {
-                    trigger.style.transform = 'scale(0.96)';
-                    setTimeout(() => { trigger.style.transform = ''; }, 150);
-                }
-            });
-
-            items.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    const value = this.getAttribute('data-value');
-                    if (value === 'Complex') return;
-
-                    e.stopPropagation();
-                    const label = this.querySelector('.item-label').textContent.trim();
-                    selectedLabel.textContent = label;
-                    items.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    menu.classList.remove('open');
-                    trigger.classList.remove('open');
-
-                    const isPremium = (value === 'Max' || value === 'High');
-                    const iconEmoji = isPremium ? '✨' : '⚡';
-                    const labelEmoji = isPremium ? 'Premium' : 'Standard';
-                    showToast(iconEmoji + ' ' + labelEmoji + ' mode: ' + value);
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => { this.style.transform = ''; }, 150);
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                const dd = document.getElementById('premiumDropdown');
-                if (!dd.contains(e.target)) {
-                    menu.classList.remove('open');
-                    trigger.classList.remove('open');
-                }
-            });
-
-            // ---------- COMPLEX TOGGLE (fixed: use class instead of inline styles) ----------
-            const complexCheckbox = document.getElementById('complexCheckbox');
-            const complexParent = complexCheckbox.closest('.premium-dropdown-item');
-
-            complexCheckbox.addEventListener('change', function(e) {
-                e.stopPropagation();
-                const isChecked = this.checked;
-                showToast(isChecked ? '🧠 Complex Thinking: ON' : '🧠 Complex Thinking: OFF');
-                // Use class instead of inline styles
-                complexParent.classList.toggle('complex-active', isChecked);
-            });
-
-            // ---------- CHIPS ----------
+            // ---------- CHIP CONFIGURATIONS (PROMPTS) ----------
             const chips = document.querySelectorAll('.chip');
-            chips.forEach(chip => {
+            chips.forEach((chip, index) => {
                 chip.addEventListener('click', function() {
                     chips.forEach(c => c.classList.remove('active'));
                     this.classList.add('active');
+                    
                     const label = this.querySelector('.chip-label').textContent;
                     const icons = ['✍️', '📚', '💻', '👑'];
-                    const idx = Array.from(chips).indexOf(this);
-                    showToast('✨ ' + icons[idx] + ' ' + label + ' mode activated');
+                    showToast('✨ ' + icons[index] + ' ' + label + ' mode activated');
+                    
+                    const type = this.getAttribute('data-chip');
+                    const value = savedPrompts[type] || defaultPrompts[type];
+                    
+                    userInput.value = value;
+                    userInput.focus();
+                    
                     this.style.transform = 'scale(0.92)';
                     setTimeout(() => { this.style.transform = ''; }, 200);
                 });
             });
 
-            // ---------- SIDEBAR ICONS ----------
+            // ---------- API FETCH LOGIC FOR SELECTION ----------
+            async function callAPI(provider, model, prompt, signal) {
+                const history = [...conversationHistory, { role: 'user', content: prompt }];
+                let apiKey = '';
+                let url = '';
+                let headers = { 'Content-Type': 'application/json' };
+                let body = {};
+
+                // Map 'carebrass-default-model' internally to Cerebras-supported 'llama3.1-70b'
+                let resolvedModel = model;
+                if (provider === 'cerebras' && model === 'carebrass-default-model') {
+                    resolvedModel = 'llama3.1-70b';
+                }
+
+                switch (provider) {
+                    case 'groq':
+                        apiKey = localStorage.getItem('api_key_groq');
+                        if (!apiKey) throw new Error('Groq Key is missing.');
+                        url = 'https://api.groq.com/openai/v1/chat/completions';
+                        headers['Authorization'] = `Bearer ${apiKey}`;
+                        body = { model: resolvedModel, messages: history };
+                        break;
+                        
+                    case 'gemini':
+                        apiKey = localStorage.getItem('api_key_gemini');
+                        if (!apiKey) throw new Error('Gemini Key is missing.');
+                        url = `https://generativelanguage.googleapis.com/v1beta/models/${resolvedModel}:generateContent?key=${apiKey}`;
+                        const geminiContents = history.map(msg => ({
+                            role: msg.role === 'assistant' ? 'model' : 'user',
+                            parts: [{ text: msg.content }]
+                        }));
+                        body = { contents: geminiContents };
+                        break;
+
+                    case 'mistral':
+                        apiKey = localStorage.getItem('api_key_mistral');
+                        if (!apiKey) throw new Error('Mistral Key is missing.');
+                        url = 'https://api.mistral.ai/v1/chat/completions';
+                        headers['Authorization'] = `Bearer ${apiKey}`;
+                        body = { model: resolvedModel, messages: history };
+                        break;
+
+                    case 'cerebras':
+                        apiKey = localStorage.getItem('api_key_cerebras');
+                        if (!apiKey) throw new Error('Cerebras Key is missing.');
+                        url = 'https://api.cerebras.ai/v1/chat/completions';
+                        headers['Authorization'] = `Bearer ${apiKey}`;
+                        body = { model: resolvedModel, messages: history };
+                        break;
+
+                    case 'cloudflare':
+                        const cfAccountId = localStorage.getItem('cf-account-id');
+                        apiKey = localStorage.getItem('api_key_cloudflare');
+                        if (!cfAccountId || !apiKey) throw new Error('Cloudflare Acc ID or Token missing.');
+                        url = `https://api.cloudflare.com/client/v4/accounts/${cfAccountId}/ai/v1/chat/completions`;
+                        headers['Authorization'] = `Bearer ${apiKey}`;
+                        body = { model: resolvedModel, messages: history };
+                        break;
+
+                    default:
+                        throw new Error('Unsupported Provider.');
+                }
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(body),
+                    signal: signal
+                });
+
+                if (!response.ok) {
+                    const errText = await response.text();
+                    throw new Error(`API Error (${response.status}): ${errText || response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                if (provider === 'gemini') {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    return data.choices[0].message.content;
+                }
+            }
+
+            // Dropdown controls for API selection
+            const apiTrigger = document.getElementById('apiDropdownTrigger');
+            const apiMenu = document.getElementById('apiDropdownMenu');
+            const apiItems = apiMenu.querySelectorAll('.model-dropdown-item');
+
+            apiTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                apiMenu.classList.toggle('open');
+                apiTrigger.classList.toggle('open');
+            });
+
+            apiItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const provider = this.getAttribute('data-provider');
+                    
+                    // Set active selection
+                    activeProvider = provider;
+                    localStorage.setItem('mototus-active-provider', provider);
+                    
+                    // Sync active classes in UI
+                    apiItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update Trigger Label
+                    const labelText = this.querySelector('.item-label').textContent.trim();
+                    document.getElementById('apiSelectedLabel').textContent = labelText;
+                    
+                    // Close menu
+                    apiMenu.classList.remove('open');
+                    apiTrigger.classList.remove('open');
+                    
+                    const autoModel = getDefaultModelForAPI(provider);
+                    showToast(`🧠 Provider set to ${labelText}. Auto-selected model: ${autoModel}`);
+                });
+            });
+
+            const qualityTrigger = document.getElementById('dropdownTrigger');
+            const qualityMenu = document.getElementById('dropdownMenu');
+            const qualityItems = qualityMenu.querySelectorAll('.premium-dropdown-item');
+            const selectedLabel = document.getElementById('selectedLabel');
+
+            qualityTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                qualityMenu.classList.toggle('open');
+                qualityTrigger.classList.toggle('open');
+            });
+
+            qualityItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const value = this.getAttribute('data-value');
+                    if (value === 'Complex') return;
+
+                    e.stopPropagation();
+                    selectedLabel.textContent = this.querySelector('.item-label').textContent.trim();
+                    qualityItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    qualityMenu.classList.remove('open');
+                    qualityTrigger.classList.remove('open');
+                    showToast('Performance Level: ' + value);
+                });
+            });
+
+            // Dismiss elements
+            document.addEventListener('click', function(e) {
+                const apiDropdown = document.getElementById('apiDropdown');
+                if (apiDropdown && !apiDropdown.contains(e.target)) {
+                    apiMenu.classList.remove('open');
+                    apiTrigger.classList.remove('open');
+                }
+                const premiumDropdown = document.getElementById('premiumDropdown');
+                if (premiumDropdown && !premiumDropdown.contains(e.target)) {
+                    qualityMenu.classList.remove('open');
+                    qualityTrigger.classList.remove('open');
+                }
+            });
+
+            // Refresh Chat Helper
+            const resetAction = () => {
+                chatMessages.innerHTML = '';
+                userInput.value = '';
+                conversationHistory = [];
+                abortAllActiveRequests();
+                isTyping = false;
+                userInput.disabled = false;
+                setSendButtonState(false);
+                showToast('✨ Thread reset successfully.');
+            };
+
+            document.getElementById('newChatBtn').addEventListener('click', resetAction);
+            document.getElementById('sidebarNewChat').addEventListener('click', resetAction);
+
+            // Help Trigger
+            document.querySelector('.help-icon').addEventListener('click', () => {
+                showToast('💡 Settings আইকন থেকে এপিআই কি-সমূহ সেট করুন ও চ্যাট শুরু করুন।');
+            });
+
+            // Sidebar click micro-transitions
             document.querySelectorAll('.sidebar-icon').forEach(icon => {
                 icon.addEventListener('click', function() {
                     this.style.transform = 'scale(0.88)';
@@ -1528,545 +2848,30 @@
                 });
             });
 
-            // ---------- MIC & HELP ----------
-            document.querySelector('.toolbar-mic').addEventListener('click', function() {
-                showToast('🎤 Voice input coming soon!');
-            });
-            document.querySelector('.help-icon').addEventListener('click', function() {
-                showToast('💡 Type your question and press Enter or click Send.');
-            });
-
-            userInput.focus();
-            console.log('✅ MOTOTUS — All bugs fixed (chip vars, z‑index, padding, race condition, inline styles, avatar colors, toast)');
-
-        })();
-    </script>
-
-    <!-- MOTOTUS SMART API CONFIGURATION MODAL -->
-    <div id="mototusApiModal" class="mototus-api-modal">
-        <div class="mototus-api-card">
-            <div class="mototus-api-header">
-                <h3><i class="fa-solid fa-gears"></i> API Configuration</h3>
-                <span id="closeMototusApiModal" class="mototus-api-close"><i class="fa-solid fa-xmark"></i></span>
-            </div>
-            <div class="mototus-api-body">
-                <div class="mototus-api-field">
-                    <label for="mototusApiKey">API Key</label>
-                    <div class="mototus-api-input-wrap">
-                        <input type="password" id="mototusApiKey" class="mototus-api-input" placeholder="Enter API Key">
-                        <button type="button" id="mototusApiKeyToggle" class="mototus-api-vis-toggle" title="Toggle visibility">
-                            <i class="fa-regular fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="mototus-api-field">
-                    <label for="mototusApiModel">Model Name</label>
-                    <input type="text" id="mototusApiModel" class="mototus-api-input" placeholder="e.g., gpt-4o-mini, llama3.1-8b">
-                </div>
-                <div class="mototus-api-actions">
-                    <button type="button" id="deleteMototusApi" class="mototus-api-btn mototus-api-btn-danger">Delete Key</button>
-                    <button type="button" id="testMototusApi" class="mototus-api-btn mototus-api-btn-secondary">Test Connection</button>
-                    <button type="button" id="saveMototusApi" class="mototus-api-btn mototus-api-btn-primary">Save Settings</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MOTOTUS SMART AUTO-DETECTION ENGINE -->
-    <script>
-        (function() {
-            'use strict';
-
-            const apiModal = document.getElementById('mototusApiModal');
-            const openModalBtn = document.querySelector('.sidebar-icon.settings-icon');
-            const closeModalBtn = document.getElementById('closeMototusApiModal');
-            
-            const apiKeyInput = document.getElementById('mototusApiKey');
-            const apiModelInput = document.getElementById('mototusApiModel');
-            const apiKeyToggle = document.getElementById('mototusApiKeyToggle');
-            
-            const btnSave = document.getElementById('saveMototusApi');
-            const btnTest = document.getElementById('testMototusApi');
-            const btnDelete = document.getElementById('deleteMototusApi');
-            
-            const chatMessages = document.getElementById('chatMessages');
-            const originalUserInput = document.getElementById('userInput');
-            const originalSendBtn = document.getElementById('sendBtn');
-            const originalNewChatBtn = document.getElementById('sidebarNewChatBtn'); // updated to sidebar plus
-
-            let isApiTyping = false;
-            let customHistory = [];
-
-            const CONFIG_KEY = 'mototus-smart-api-config';
-
-            // Popular working default models to use during fallbacks
-            const providerDefaults = {
-                'OpenAI': { model: 'gpt-4o-mini', baseUrl: 'https://api.openai.com/v1' },
-                'Cerebras': { model: 'llama3.1-8b', baseUrl: 'https://api.cerebras.ai/v1' },
-                'Groq': { model: 'llama-3.1-8b-instant', baseUrl: 'https://api.groq.com/openai/v1' },
-                'Mistral': { model: 'open-mistral-7b', baseUrl: 'https://api.mistral.ai/v1' },
-                'Together AI': { model: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo', baseUrl: 'https://api.together.xyz/v1' },
-                'OpenRouter': { model: 'meta-llama/llama-3-8b-instruct:free', baseUrl: 'https://openrouter.ai/api/v1' },
-                'Gemini': { model: 'gemini-1.5-flash', baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai' },
-                'Cloudflare': { model: '@cf/meta/llama-3.1-8b-instruct', baseUrl: null }
-            };
-
-            function showApiToast(msg) {
-                const old = document.querySelector('.mototus-toast');
-                if (old) old.remove();
-
-                const toast = document.createElement('div');
-                toast.className = 'mototus-toast';
-                toast.textContent = msg;
-                document.body.appendChild(toast);
-
-                requestAnimationFrame(() => {
-                    toast.classList.add('show');
-                });
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 400);
-                }, 2800);
-            }
-
-            function loadConfig() {
-                const raw = localStorage.getItem(CONFIG_KEY);
-                if (raw) {
-                    try {
-                        const config = JSON.parse(raw);
-                        apiKeyInput.value = config.apiKey || '';
-                        apiModelInput.value = config.model || '';
-                    } catch (e) {
-                        console.error(e);
-                    }
-                } else {
-                    apiKeyInput.value = '';
-                    apiModelInput.value = '';
-                }
-            }
-
-            // Automatic Provider Detection and Verification Engine
-            async function runDetectionEngine(apiKey, modelName) {
-                const endpoints = [
-                    { name: 'OpenAI', url: 'https://api.openai.com/v1' },
-                    { name: 'Cerebras', url: 'https://api.cerebras.ai/v1' },
-                    { name: 'Groq', url: 'https://api.groq.com/openai/v1' },
-                    { name: 'Mistral', url: 'https://api.mistral.ai/v1' },
-                    { name: 'Together AI', url: 'https://api.together.xyz/v1' },
-                    { name: 'OpenRouter', url: 'https://openrouter.ai/api/v1' },
-                    { name: 'Gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai' }
-                ];
-
-                // 1. Analyze Key Signatures for Instant Mapping
-                let reordered = [...endpoints];
-                if (apiKey.startsWith('csk-')) {
-                    reordered = [{ name: 'Cerebras', url: 'https://api.cerebras.ai/v1' }, ...endpoints.filter(e => e.name !== 'Cerebras')];
-                } else if (apiKey.startsWith('gsk_')) {
-                    reordered = [{ name: 'Groq', url: 'https://api.groq.com/openai/v1' }, ...endpoints.filter(e => e.name !== 'Groq')];
-                } else if (apiKey.startsWith('sk-or-')) {
-                    reordered = [{ name: 'OpenRouter', url: 'https://openrouter.ai/api/v1' }, ...endpoints.filter(e => e.name !== 'OpenRouter')];
-                } else if (apiKey.startsWith('AIzaSy')) {
-                    reordered = [{ name: 'Gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai' }, ...endpoints.filter(e => e.name !== 'Gemini')];
-                } else if (apiKey.startsWith('sk-proj-')) {
-                    reordered = [{ name: 'OpenAI', url: 'https://api.openai.com/v1' }, ...endpoints.filter(e => e.name !== 'OpenAI')];
-                }
-
-                // 2. Cloudflare API Account Auto-Discovery via Bearer Token
-                if (apiKey.length === 40 && !apiKey.startsWith('sk-')) {
-                    try {
-                        const cfRes = await fetch('https://api.cloudflare.com/client/v4/accounts', {
-                            headers: { 'Authorization': `Bearer ${apiKey}` }
-                        });
-                        if (cfRes.ok) {
-                            const cfData = await cfRes.json();
-                            if (cfData.success && cfData.result && cfData.result.length > 0) {
-                                const accountId = cfData.result[0].id;
-                                const cfUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`;
-                                reordered.unshift({ name: 'Cloudflare', url: cfUrl });
-                            }
-                        }
-                    } catch (e) {
-                        // Fail silently, fall back to other providers
-                    }
-                }
-
-                // 3. Parallel probing on detected and backup endpoints
-                const probePromises = reordered.map(async (ep) => {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s per request limit
-
-                    try {
-                        const testUrl = `${ep.url}/chat/completions`;
-                        const testModel = modelName || providerDefaults[ep.name].model;
-                        const response = await fetch(testUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${apiKey}`
-                            },
-                            body: JSON.stringify({
-                                model: testModel,
-                                messages: [{ role: 'user', content: 'Ping' }],
-                                max_tokens: 1
-                            }),
-                            signal: controller.signal
-                        });
-
-                        clearTimeout(timeoutId);
-
-                        if (response.status === 200) {
-                            return { status: 'success', endpoint: ep.url, provider: ep.name, model: testModel };
-                        } else if (response.status === 400 || response.status === 404 || response.status === 422) {
-                            // Endpoint works but model name was unrecognized / unavailable
-                            return { status: 'bad_model', endpoint: ep.url, provider: ep.name };
-                        } else {
-                            throw new Error('Connection failed');
-                        }
-                    } catch (err) {
-                        clearTimeout(timeoutId);
-                        throw err;
-                    }
-                });
-
-                const results = await Promise.allSettled(probePromises);
-
-                // Check for verified successful endpoint and model pairing
-                for (const res of results) {
-                    if (res.status === 'fulfilled' && res.value.status === 'success') {
-                        return res.value;
-                    }
-                }
-
-                // Smart Fallback/Correction: If base URL matched but model is invalid, auto-fix
-                for (const res of results) {
-                    if (res.status === 'fulfilled' && res.value.status === 'bad_model') {
-                        const fallbackModel = providerDefaults[res.value.provider].model;
-                        return {
-                            status: 'success',
-                            endpoint: res.value.endpoint,
-                            provider: res.value.provider,
-                            model: fallbackModel,
-                            autoFixed: true,
-                            warning: `Model unverified. Configured default model: ${fallbackModel}`
-                        };
-                    }
-                }
-
-                throw new Error('No working provider detected. Verify your API Key.');
-            }
-
-            // Modal Interactions
-            openModalBtn.addEventListener('click', function(e) {
+            // Complex switch toggle
+            const complexCheckbox = document.getElementById('complexCheckbox');
+            complexCheckbox.addEventListener('change', function(e) {
                 e.stopPropagation();
-                loadConfig();
-                apiModal.classList.add('open');
+                showToast(this.checked ? '🧠 Complex Reasoning Enabled' : '🧠 Standard Response Mode');
+                this.closest('.premium-dropdown-item').classList.toggle('complex-active', this.checked);
             });
 
-            closeModalBtn.addEventListener('click', function() {
-                apiModal.classList.remove('open');
-            });
-
-            window.addEventListener('click', function(e) {
-                if (e.target === apiModal) {
-                    apiModal.classList.remove('open');
-                }
-            });
-
-            apiKeyToggle.addEventListener('click', function() {
-                const isPassword = apiKeyInput.type === 'password';
-                apiKeyInput.type = isPassword ? 'text' : 'password';
-                this.querySelector('i').className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
-            });
-
-            // Action Buttons Handling
-            btnSave.addEventListener('click', async function() {
-                const key = apiKeyInput.value.trim();
-                const model = apiModelInput.value.trim();
-
-                if (!key) {
-                    showApiToast('⚠️ Please enter an API key.');
-                    return;
-                }
-
-                btnSave.textContent = 'Detecting...';
-                btnSave.disabled = true;
-
-                try {
-                    const config = await runDetectionEngine(key, model);
-                    const finalConfig = {
-                        apiKey: key,
-                        model: config.model,
-                        baseUrl: config.endpoint,
-                        provider: config.provider
-                    };
-                    localStorage.setItem(CONFIG_KEY, JSON.stringify(finalConfig));
-                    apiModelInput.value = config.model;
-
-                    if (config.autoFixed) {
-                        showApiToast('💡 ' + config.warning);
+            // Initialize rendering active listing
+            function initActiveAPIDropdown() {
+                const items = document.querySelectorAll('#apiDropdownMenu .model-dropdown-item');
+                items.forEach(item => {
+                    const prov = item.getAttribute('data-provider');
+                    if (prov === activeProvider) {
+                        item.classList.add('active');
+                        document.getElementById('apiSelectedLabel').textContent = item.querySelector('.item-label').textContent.trim();
                     } else {
-                        showApiToast('✅ Auto-detected ' + config.provider + '! Configuration saved.');
+                        item.classList.remove('active');
                     }
-                    apiModal.classList.remove('open');
-                } catch (err) {
-                    showApiToast('❌ Probe failed: ' + err.message);
-                } finally {
-                    btnSave.textContent = 'Save Settings';
-                    btnSave.disabled = false;
-                }
-            });
-
-            btnTest.addEventListener('click', async function() {
-                const key = apiKeyInput.value.trim();
-                const model = apiModelInput.value.trim();
-
-                if (!key) {
-                    showApiToast('⚠️ Please enter an API key to test.');
-                    return;
-                }
-
-                btnTest.textContent = 'Probing...';
-                btnTest.disabled = true;
-
-                try {
-                    const config = await runDetectionEngine(key, model);
-                    showApiToast('✅ Verified ' + config.provider + ' connection with model ' + config.model + '!');
-                } catch (err) {
-                    showApiToast('❌ Connection failed: ' + err.message);
-                } finally {
-                    btnTest.textContent = 'Test Connection';
-                    btnTest.disabled = false;
-                }
-            });
-
-            btnDelete.addEventListener('click', function() {
-                if (confirm('Delete configuration? Custom API configurations will be cleared.')) {
-                    localStorage.removeItem(CONFIG_KEY);
-                    apiKeyInput.value = '';
-                    apiModelInput.value = '';
-                    showApiToast('🗑️ Settings cleared. Fallback simulation enabled.');
-                }
-            });
-
-            // Retrieval Helper
-            function getSavedConfig() {
-                const raw = localStorage.getItem(CONFIG_KEY);
-                if (raw) {
-                    try { return JSON.parse(raw); } catch (e) { return null; }
-                }
-                return null;
+                });
             }
+            initActiveAPIDropdown();
 
-            // Custom UI elements (identical avatar styles as original)
-            function createCustomMessage(text, type) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'chat-message ' + type;
-
-                if (type === 'user') {
-                    const bubble = document.createElement('div');
-                    bubble.className = 'bubble';
-                    bubble.textContent = text;
-                    wrapper.appendChild(bubble);
-                } else {
-                    const avatar = document.createElement('div');
-                    avatar.className = 'avatar';
-                    avatar.innerHTML = `
-                        <div class="mini-orbit">
-                            <div class="half left"><i class="fas fa-brain"></i></div>
-                            <div class="half right"><i class="fas fa-brain"></i></div>
-                            <div class="line"></div>
-                        </div>
-                    `;
-                    wrapper.appendChild(avatar);
-
-                    const bubble = document.createElement('div');
-                    bubble.className = 'bubble';
-                    bubble.textContent = text;
-                    wrapper.appendChild(bubble);
-                }
-                return wrapper;
-            }
-
-            function typeWriterCustomAI(text, messageElement) {
-                const bubble = messageElement.querySelector('.bubble');
-                bubble.innerHTML = '';
-                let index = 0;
-                const cursorSpan = document.createElement('span');
-                cursorSpan.className = 'cursor-blink';
-                bubble.appendChild(cursorSpan);
-
-                function typeChar() {
-                    if (index < text.length) {
-                        const char = text.charAt(index);
-                        const textNode = document.createTextNode(char);
-                        bubble.insertBefore(textNode, cursorSpan);
-                        index++;
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                        setTimeout(typeChar, 25 + Math.random() * 30);
-                    } else {
-                        if (cursorSpan.parentNode) cursorSpan.remove();
-                        messageElement.classList.remove('typing');
-                        isApiTyping = false;
-                    }
-                }
-                isApiTyping = true;
-                typeChar();
-            }
-
-            // Intercept message dispatch
-            async function handleCustomSend() {
-                if (isApiTyping) {
-                    showApiToast('⏳ Please wait for the current response to finish.');
-                    return;
-                }
-
-                const inputText = originalUserInput.value.trim();
-                if (!inputText) {
-                    showApiToast('Please type something first.');
-                    return;
-                }
-
-                const config = getSavedConfig();
-                if (!config || !config.apiKey) return; // Propagates normally when key is absent
-
-                const userMsg = createCustomMessage(inputText, 'user');
-                chatMessages.appendChild(userMsg);
-                originalUserInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                customHistory.push({ role: 'user', content: inputText });
-
-                const aiMsg = createCustomMessage('Thinking...', 'ai');
-                aiMsg.classList.add('typing');
-                chatMessages.appendChild(aiMsg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                isApiTyping = true;
-
-                const url = `${config.baseUrl}/chat/completions`;
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.apiKey}`
-                };
-
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify({
-                            model: config.model,
-                            messages: customHistory
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errData = await response.json().catch(() => ({}));
-                        const errMsg = errData?.error?.message || errData?.message || ('HTTP ' + response.status);
-                        throw new Error(errMsg);
-                    }
-
-                    const resData = await response.json();
-                    const aiReplyText = resData?.choices?.[0]?.message?.content || 'Empty reply content received.';
-
-                    customHistory.push({ role: 'assistant', content: aiReplyText });
-                    typeWriterCustomAI(aiReplyText, aiMsg);
-
-                } catch (err) {
-                    console.error(err);
-                    aiMsg.classList.remove('typing');
-                    const bubble = aiMsg.querySelector('.bubble');
-                    bubble.textContent = `Error: ${err.message || 'Failed to complete API request.'}`;
-                    isApiTyping = false;
-                }
-            }
-
-            // Event captures
-            originalSendBtn.addEventListener('click', function(e) {
-                const config = getSavedConfig();
-                if (config && config.apiKey) {
-                    e.stopImmediatePropagation();
-                    handleCustomSend();
-                }
-            }, true);
-
-            originalUserInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    const config = getSavedConfig();
-                    if (config && config.apiKey) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        handleCustomSend();
-                    }
-                }
-            }, true);
-
-            originalNewChatBtn.addEventListener('click', function() {
-                customHistory = [];
-                isApiTyping = false;
-            });
-
-            // Handle custom API Document Upload events
-            window.addEventListener('mototus-doc-uploaded', async function(e) {
-                const file = e.detail;
-                if (isApiTyping) {
-                    showApiToast('⏳ Please wait for the current response to finish.');
-                    return;
-                }
-
-                const config = getSavedConfig();
-                if (!config || !config.apiKey) return;
-
-                const docText = `📁 Uploaded document: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-                const userMsg = createCustomMessage(docText, 'user');
-                chatMessages.appendChild(userMsg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                customHistory.push({ role: 'user', content: `[User uploaded document: ${file.name}]` });
-
-                const aiMsg = createCustomMessage('Thinking...', 'ai');
-                aiMsg.classList.add('typing');
-                chatMessages.appendChild(aiMsg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                isApiTyping = true;
-
-                const url = `${config.baseUrl}/chat/completions`;
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.apiKey}`
-                };
-
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify({
-                            model: config.model,
-                            messages: customHistory
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errData = await response.json().catch(() => ({}));
-                        const errMsg = errData?.error?.message || errData?.message || ('HTTP ' + response.status);
-                        throw new Error(errMsg);
-                    }
-
-                    const resData = await response.json();
-                    const aiReplyText = resData?.choices?.[0]?.message?.content || 'Empty reply content received.';
-
-                    customHistory.push({ role: 'assistant', content: aiReplyText });
-                    typeWriterCustomAI(aiReplyText, aiMsg);
-
-                } catch (err) {
-                    console.error(err);
-                    aiMsg.classList.remove('typing');
-                    const bubble = aiMsg.querySelector('.bubble');
-                    bubble.textContent = `Error analyzing document: ${err.message || 'API request failed.'}`;
-                    isApiTyping = false;
-                }
-            });
+            console.log('✅ Smart Auto-Model selection system successfully active.');
         })();
     </script>
 </body>
